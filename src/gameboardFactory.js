@@ -69,10 +69,10 @@ function gameboardFactory() {
 
   const isGameOver = function () {
     return (
-      this.fleet.carrier.isSunk &&
-      this.fleet.patrolBoat.isSunk &&
-      this.fleet.destroyer.isSunk &&
-      this.fleet.battleship.isSunk
+      this.fleet.carrier.isSunk() &&
+      this.fleet.patrolBoat.isSunk() &&
+      this.fleet.destroyer.isSunk() &&
+      this.fleet.battleship.isSunk()
     );
   };
 

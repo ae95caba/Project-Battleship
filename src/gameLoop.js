@@ -36,7 +36,7 @@ async function gameLoop() {
 
   for (
     let turn = 1;
-    computerBoardObj.isGameOver() == false ||
+    computerBoardObj.isGameOver() == false &&
     playerBoardObj.isGameOver() == false;
     turn++
   ) {
@@ -46,6 +46,12 @@ async function gameLoop() {
     console.log("computerAttackNExt");
     computerAttack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");
+
+    console.log(computerBoardObj.isGameOver());
+
+    /*  gameboard.fleet.destroyer.isSunk ;
+     gameboard.fleet.patrolBoat.isSunk;
+     gameboard.fleet.battleship.isSunk; */
   }
 
   alert("game over");
