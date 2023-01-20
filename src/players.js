@@ -1,38 +1,54 @@
-const computer = {
-  turn: function (boardObj) {
-    function randomIntFromInterval(min, max) {
-      // min and max included
-      return Math.floor(Math.random() * (max - min + 1) + min);
-    }
+function computerAttack() {
+  function randomIntFromInterval(min, max) {
+    // min and max included
 
-    boardObj.reciveAttack(
-      randomIntFromInterval(0, 9),
-      randomIntFromInterval(0, 9)
-    );
-  },
-};
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
-const player = {
-  turn: function () {
-    const computerBoard = document.getElementById("computerBoard");
-    //const playerBoard = document.getElementById("playerBoard");
-    computerBoard.addEventListener(
-      "click",
-      (e) => {
-        let y = e.target.dataset.x;
-        let x = e.target.parentElement.dataset.y;
+  const x = randomIntFromInterval(0, 9);
+  const y = randomIntFromInterval(0, 9);
+
+  if (playerBoardObj.reciveAttack(x, y) !== "repetido") {
+    playerBoardObj.reciveAttack(x, y);
+  } else {
+    alert("computer repetido");
+    computerAttack(playerBoardObj);
+  }
+}
+
+function actualGameLoop() {
+  const computerBoard = document.getElementById("computerBoard");
+  computerBoard.addEventListener(
+    "click",
+    (e) => {
+      let x = e.target.dataset.x;
+      let y = e.target.parentElement.dataset.y;
+
+      if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
         computerBoardObj.reciveAttack(x, y);
+
         domPopulateBoard(computerBoardObj, "#computerBoard", false);
-        ///here ends player interaction
+
         setTimeout(() => {
-          computer.attack(playerBoardObj);
+          computerAttack();
           domPopulateBoard(playerBoardObj, "#playerBoard");
           playerTurn();
         }, 2000);
-      },
-      { once: true }
-    );
-  },
-};
+      } else {
+        alert("repetido");
+        playerTurn();
+      }
+    },
+    { once: true }
+  );
+}
 
-export { computer, player };
+function Player() {
+  let name = undefined;
+  let turn = function (asddf) {
+    asdf;
+  };
+  return { name, turn };
+}
+
+export { computerAttack, actualGameLoop };

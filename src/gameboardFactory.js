@@ -76,7 +76,7 @@ function gameboardFactory() {
     );
   };
 
-  return { board, fleet, placeShip, reciveAttack, missedShoots, isGameOver };
+  return { board, fleet, placeShip, reciveAttack, isGameOver };
 }
 
 export default gameboardFactory;
