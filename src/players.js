@@ -67,7 +67,7 @@ function Players() {
 
 function playerAttack(computerBoardObj) {
   console.log("playerAttack function");
-  return new Promise(function (resolve, reject) {
+  return new Promise(function asd(resolve, reject) {
     const computerBoard = document.getElementById("computerBoard");
     computerBoard.addEventListener(
       "click",
@@ -82,8 +82,8 @@ function playerAttack(computerBoardObj) {
           computerBoardObj.reciveAttack(x, y);
           resolve();
         } else {
-          console.log("repetidoooo");
-          reject();
+          console.log("repetido intenta denuevo");
+          asd(resolve, reject);
         }
       },
       { once: true }
