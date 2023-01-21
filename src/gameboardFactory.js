@@ -6,6 +6,8 @@ function gameboardFactory() {
   let missedShoots = [];
 
   const placeShip = (length, x, y) => {
+    console.log(x);
+    console.log(y);
     let currentShip;
     switch (length) {
       case 5:
@@ -38,7 +40,8 @@ function gameboardFactory() {
     }
 
     for (let i = 0; i < length; i++) {
-      board[y][x + i] = {
+      console.log(x + i);
+      board[y][+x + i] = {
         destroyed: false,
 
         hit: function () {
@@ -76,7 +79,13 @@ function gameboardFactory() {
     );
   };
 
-  return { board, fleet, placeShip, reciveAttack, isGameOver };
+  return {
+    board,
+    fleet,
+    placeShip,
+    reciveAttack,
+    isGameOver,
+  };
 }
 
 export default gameboardFactory;

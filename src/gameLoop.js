@@ -2,6 +2,7 @@ import {
   domRenderBoard,
   domPopulateBoard,
   attackWithClick,
+  domPlaceShip,
 } from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
 import { computerAttack, playerTurn, playerAttack } from "./players";
@@ -14,17 +15,35 @@ async function gameLoop() {
   content.appendChild(domRenderBoard("computerBoard")); // make empty board
   const playerBoardObj = gameboardFactory();
   const computerBoardObj = gameboardFactory();
-  playerBoardObj.placeShip(2, 6, 2);
+
   computerBoardObj.placeShip(2, 6, 2);
+  domPopulateBoard(computerBoardObj, "#computerBoard");
+  console.log("place your 2 ship");
+  await domPlaceShip(2, "playerBoard", playerBoardObj);
+  domPopulateBoard(playerBoardObj, "#playerBoard", true);
+  console.log(playerBoardObj.fleet);
+  console.log(playerBoardObj.board);
 
-  playerBoardObj.placeShip(3, 3, 3);
   computerBoardObj.placeShip(3, 3, 3);
+  console.log("place your 3 ship");
+  await domPlaceShip(3, "playerBoard", playerBoardObj);
+  domPopulateBoard(playerBoardObj, "#playerBoard", true);
+  console.log(playerBoardObj.fleet);
+  console.log(playerBoardObj.board);
 
-  playerBoardObj.placeShip(4, 4, 5);
   computerBoardObj.placeShip(4, 4, 5);
+  console.log("place your 4 ship");
+  await domPlaceShip(4, "playerBoard", playerBoardObj);
+  domPopulateBoard(playerBoardObj, "#playerBoard", true);
+  console.log(playerBoardObj.fleet);
+  console.log(playerBoardObj.board);
 
-  playerBoardObj.placeShip(5, 5, 7);
   computerBoardObj.placeShip(5, 5, 7);
+  console.log("place your 5 ship");
+  await domPlaceShip(5, "playerBoard", playerBoardObj);
+  domPopulateBoard(playerBoardObj, "#playerBoard", true);
+  console.log(playerBoardObj.fleet);
+  console.log(playerBoardObj.board);
 
   //3-  We’ll leave the HTML implementation up to you for now, but you should display both the player’s boards and render them using information from the Gameboard class.
 
@@ -36,22 +55,22 @@ async function gameLoop() {
 
   for (
     let turn = 1;
+    //Create conditions so that the game ends once one players ships have all been sunk. This function is appropriate for the Game module.
     computerBoardObj.isGameOver() == false &&
     playerBoardObj.isGameOver() == false;
     turn++
   ) {
     console.log("awaiting player attack");
+
     await playerAttack(computerBoardObj);
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
+
     console.log("computerAttackNExt");
+
     computerAttack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");
 
     console.log(computerBoardObj.isGameOver());
-
-    /*  gameboard.fleet.destroyer.isSunk ;
-     gameboard.fleet.patrolBoat.isSunk;
-     gameboard.fleet.battleship.isSunk; */
   }
 
   alert("game over");

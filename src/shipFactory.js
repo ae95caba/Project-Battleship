@@ -1,5 +1,4 @@
 const shipFactory = (length) => {
-  console.log(length);
   let hits = 0;
   const isSunk = function () {
     //console.log(`this.length is:${this.length}`);
