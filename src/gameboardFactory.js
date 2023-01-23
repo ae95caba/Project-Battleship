@@ -114,6 +114,7 @@ function gameboardFactory() {
   const willFollowRules = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
+        console.log(board[+x + i]);
         if (typeof board[y][+x + i] === "object") {
           return true;
         }
@@ -122,6 +123,7 @@ function gameboardFactory() {
     };
 
     const willOverflow = function (length, x) {
+      console.log(length + +x > 10);
       if (length + +x > 10) {
         return true;
       } else return false;
@@ -136,6 +138,7 @@ function gameboardFactory() {
   const willFollowRulesVertically = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
+        console.log(board[+y + i]);
         if (typeof board[+y + i][x] === "object") {
           return true;
         }
@@ -144,14 +147,17 @@ function gameboardFactory() {
     };
 
     const willOverflow = function (length, y) {
+      console.log(length + +y > 10);
       if (length + +y > 10) {
         return true;
       } else return false;
     };
-    if (!willOverlap(length, x, y) && !willOverflow(length, y)) {
-      return true;
-    } else {
-      return false;
+    if (!willOverflow(length, y)) {
+      if (!willOverlap(length, x, y)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
@@ -168,6 +174,7 @@ function gameboardFactory() {
     board,
     fleet,
     placeShip,
+    placeShipVertically,
     willFollowRules,
     reciveAttack,
     isGameOver,

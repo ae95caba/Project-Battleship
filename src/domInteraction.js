@@ -85,12 +85,24 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
         let x = e.target.dataset.x;
 
         let y = e.target.parentElement.dataset.y;
-        if (playerBoardObj.willFollowRules(length, x, y)) {
-          playerBoardObj.placeShip(length, x, y);
 
-          resolve();
-        } else {
-          asd(resolve);
+        const axisButton = document.getElementById("axis-selector");
+        if (axisButton.dataset.direction === "horizontal") {
+          if (playerBoardObj.willFollowRules(length, x, y)) {
+            playerBoardObj.placeShip(length, x, y);
+
+            resolve();
+          } else {
+            asd(resolve);
+          }
+        } else if (axisButton.dataset.direction === "vertical") {
+          if (playerBoardObj.willFollowRulesVertically(length, x, y)) {
+            playerBoardObj.placeShipVertically(length, x, y);
+
+            resolve();
+          } else {
+            asd(resolve);
+          }
         }
       },
       { once: true }
