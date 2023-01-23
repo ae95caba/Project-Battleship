@@ -66,7 +66,7 @@ function attackWithClick(domBoard, computerBoardObj) {
 }
 
 function domPlaceShip(length, playerBoardId, playerBoardObj) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function asd(resolve) {
     const playerBoard = document.getElementById(playerBoardId);
     playerBoard.addEventListener(
       "click",
@@ -74,10 +74,13 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
         let x = e.target.dataset.x;
 
         let y = e.target.parentElement.dataset.y;
+        if (playerBoardObj.placeShipWithRules(length, x, y) !== "try again") {
+          playerBoardObj.placeShip(length, x, y);
 
-        playerBoardObj.placeShip(length, x, y);
-
-        resolve();
+          resolve();
+        } else {
+          asd(resolve);
+        }
       },
       { once: true }
     );

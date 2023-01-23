@@ -6,51 +6,46 @@ function gameboardFactory() {
   let missedShoots = [];
 
   const placeShip = function (length, x, y) {
-    console.log(willOverlap(length, x, y));
-    if (!willOverlap(length, x, y)) {
-      let currentShip;
-      switch (length) {
-        case 5:
-          {
-            fleet.carrier = shipFactory(length);
-            currentShip = "carrier";
-          }
-          break;
-        case 4:
-          {
-            fleet.battleship = shipFactory(length);
-            currentShip = "battleship";
-          }
-          break;
-        case 3:
-          {
-            fleet.destroyer = shipFactory(length);
-            currentShip = "destroyer";
-          }
-          //fleet.submarine = shipFactory(length);
-          break;
+    let currentShip;
+    switch (length) {
+      case 5:
+        {
+          fleet.carrier = shipFactory(length);
+          currentShip = "carrier";
+        }
+        break;
+      case 4:
+        {
+          fleet.battleship = shipFactory(length);
+          currentShip = "battleship";
+        }
+        break;
+      case 3:
+        {
+          fleet.destroyer = shipFactory(length);
+          currentShip = "destroyer";
+        }
+        //fleet.submarine = shipFactory(length);
+        break;
 
-        case 2:
-          {
-            fleet.patrolBoat = shipFactory(length);
-            currentShip = "patrolBoat";
-          }
+      case 2:
+        {
+          fleet.patrolBoat = shipFactory(length);
+          currentShip = "patrolBoat";
+        }
 
-          break;
-      }
+        break;
+    }
 
-      for (let i = 0; i < length; i++) {
-        board[y][+x + i] = {
-          destroyed: false,
+    for (let i = 0; i < length; i++) {
+      board[y][+x + i] = {
+        destroyed: false,
 
-          hit: function () {
-            fleet[currentShip].hit();
-            this.destroyed = true;
-          },
-        };
-      }
-    } else {
-      console.log("it will overlap");
+        hit: function () {
+          fleet[currentShip].hit();
+          this.destroyed = true;
+        },
+      };
     }
   };
 
@@ -89,6 +84,8 @@ function gameboardFactory() {
     };
     if (!willOverlap(length, x, y) && !willOverflow(length, x)) {
       placeShip(length, x, y);
+    } else {
+      return "try again";
     }
   };
 
