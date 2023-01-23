@@ -1,3 +1,14 @@
+function axisButton() {
+  const axisButton = document.getElementById("axis-selector");
+  axisButton.addEventListener("click", () => {
+    if (axisButton.dataset.direction === "horizontal") {
+      axisButton.dataset.direction = "vertical";
+    } else {
+      axisButton.dataset.direction = "horizontal";
+    }
+  });
+}
+
 function domRenderBoard(id) {
   const board = document.createElement("div");
   board.id = id;
@@ -87,4 +98,10 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
   });
 }
 
-export { domRenderBoard, domPlaceShip, domPopulateBoard, attackWithClick };
+export {
+  domRenderBoard,
+  domPlaceShip,
+  domPopulateBoard,
+  attackWithClick,
+  axisButton,
+};
