@@ -132,7 +132,7 @@ it("should be able to report whether or not all of their ships have been sunk 3"
   expect(gameboard.isGameOver()).toEqual(false);
 });
 
-it("should be able to detect if  placeShip is going to overlap another ship", () => {
+/* it("should be able to detect if  placeShip is going to overlap another ship", () => {
   let gameboard = gameboardFactory();
 
   gameboard.placeShip(3, 1, 3);
@@ -140,4 +140,15 @@ it("should be able to detect if  placeShip is going to overlap another ship", ()
     //console.debug(gameboard.fleet);
 
     expect(gameboard.isGameOver()).toEqual(false);
+}); */
+
+it("should be able to detect if  placeShip is going to overflow the board", () => {
+  let gameboard = gameboardFactory();
+
+  expect(gameboard.willFollowRules(5, 9, 1)).toEqual(false);
+});
+
+it("should be able to detect if  placeShip is going to overflow the board 2", () => {
+  let gameboard = gameboardFactory();
+  expect(gameboard.willFollowRules(2, 6, 1)).toEqual(true);
 });

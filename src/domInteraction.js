@@ -74,7 +74,7 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
         let x = e.target.dataset.x;
 
         let y = e.target.parentElement.dataset.y;
-        if (playerBoardObj.placeShipWithRules(length, x, y) !== "try again") {
+        if (playerBoardObj.willFollowRules(length, x, y)) {
           playerBoardObj.placeShip(length, x, y);
 
           resolve();
