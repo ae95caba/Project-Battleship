@@ -21,29 +21,21 @@ async function gameLoop() {
   console.log("place your 2 ship");
   await domPlaceShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
-  console.log(playerBoardObj.fleet);
-  console.log(playerBoardObj.board);
 
   computerBoardObj.placeShip(3, 3, 3);
   console.log("place your 3 ship");
   await domPlaceShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
-  console.log(playerBoardObj.fleet);
-  console.log(playerBoardObj.board);
 
   computerBoardObj.placeShip(4, 4, 5);
   console.log("place your 4 ship");
   await domPlaceShip(4, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
-  console.log(playerBoardObj.fleet);
-  console.log(playerBoardObj.board);
 
   computerBoardObj.placeShip(5, 5, 7);
   console.log("place your 5 ship");
   await domPlaceShip(5, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
-  console.log(playerBoardObj.fleet);
-  console.log(playerBoardObj.board);
 
   //3-  We’ll leave the HTML implementation up to you for now, but you should display both the player’s boards and render them using information from the Gameboard class.
 

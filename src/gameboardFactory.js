@@ -5,50 +5,52 @@ function gameboardFactory() {
   let fleet = {};
   let missedShoots = [];
 
-  const placeShip = (length, x, y) => {
-    console.log(x);
-    console.log(y);
-    let currentShip;
-    switch (length) {
-      case 5:
-        {
-          fleet.carrier = shipFactory(length);
-          currentShip = "carrier";
-        }
-        break;
-      case 4:
-        {
-          fleet.battleship = shipFactory(length);
-          currentShip = "battleship";
-        }
-        break;
-      case 3:
-        {
-          fleet.destroyer = shipFactory(length);
-          currentShip = "destroyer";
-        }
-        //fleet.submarine = shipFactory(length);
-        break;
+  const placeShip = function (length, x, y) {
+    console.log(willOverlap(length, x, y));
+    if (!willOverlap(length, x, y)) {
+      let currentShip;
+      switch (length) {
+        case 5:
+          {
+            fleet.carrier = shipFactory(length);
+            currentShip = "carrier";
+          }
+          break;
+        case 4:
+          {
+            fleet.battleship = shipFactory(length);
+            currentShip = "battleship";
+          }
+          break;
+        case 3:
+          {
+            fleet.destroyer = shipFactory(length);
+            currentShip = "destroyer";
+          }
+          //fleet.submarine = shipFactory(length);
+          break;
 
-      case 2:
-        {
-          fleet.patrolBoat = shipFactory(length);
-          currentShip = "patrolBoat";
-        }
+        case 2:
+          {
+            fleet.patrolBoat = shipFactory(length);
+            currentShip = "patrolBoat";
+          }
 
-        break;
-    }
+          break;
+      }
 
-    for (let i = 0; i < length; i++) {
-      console.log(x + i);
-      board[y][+x + i] = {
-        destroyed: false,
+      for (let i = 0; i < length; i++) {
+        board[y][+x + i] = {
+          destroyed: false,
 
-        hit: function () {
-          fleet[currentShip].hit();
-          this.destroyed = true;
-        },
-      };
+          hit: function () {
+            fleet[currentShip].hit();
+            this.destroyed = true;
+          },
+        };
+      }
+    } else {
+      console.log("it will overlap");
     }
   };
 
@@ -70,6 +72,26 @@ function gameboardFactory() {
     }
   };
 
+  const placeShipWithRules = function (length, x, y) {
+    const willOverlap = function (length, x, y) {
+      for (let i = 0; i < length; i++) {
+        if (typeof board[y][+x + i] === "object") {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const willOverflow = function (length, x) {
+      if (!x + length > 10) {
+        return true;
+      } else return false;
+    };
+    if (!willOverlap(length, x, y) && !willOverflow(length, x)) {
+      placeShip(length, x, y);
+    }
+  };
+
   const isGameOver = function () {
     return (
       this.fleet.carrier.isSunk() &&
@@ -83,6 +105,7 @@ function gameboardFactory() {
     board,
     fleet,
     placeShip,
+    placeShipWithRules,
     reciveAttack,
     isGameOver,
   };
