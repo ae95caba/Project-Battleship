@@ -1,20 +1,39 @@
 import { attackWithClick } from "./domInteraction";
 
+const computer = {
+  attack: function () {},
+  placeShip: function () {},
+};
+
 function computerAttack(playerBoardObj) {
   function randomIntFromInterval(min, max) {
     // min and max included
 
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-
   const x = randomIntFromInterval(0, 9);
   const y = randomIntFromInterval(0, 9);
 
   if (playerBoardObj.reciveAttack(x, y) !== "repetido") {
     playerBoardObj.reciveAttack(x, y);
   } else {
-    alert("computer repetido");
+    console.log("computer repetido");
     computerAttack(playerBoardObj);
+  }
+}
+
+function computerPlaceShip(computerBoardObj, length) {
+  function randomIntFromInterval(min, max) {
+    // min and max included
+
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  const x = randomIntFromInterval(0, 9);
+  const y = randomIntFromInterval(0, 9);
+  if (computerBoardObj.willFollowRules(length, x, y)) {
+    computerBoardObj.placeShip(length, x, y);
+  } else {
+    computerPlaceShip(computerBoardObj, length);
   }
 }
 
@@ -44,4 +63,4 @@ function playerAttack(computerBoardObj) {
   });
 }
 
-export { playerAttack, computerAttack };
+export { playerAttack, computerAttack, computerPlaceShip };
