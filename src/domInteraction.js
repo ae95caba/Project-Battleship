@@ -82,29 +82,37 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
     playerBoard.addEventListener(
       "click",
       (e) => {
-        let x = e.target.dataset.x;
+        if (
+          e.target.id === "playerBoard" ||
+          e.target.classList.contains("row")
+        ) {
+          asd(resolve);
+        } else {
+          let x = e.target.dataset.x;
 
-        let y = e.target.parentElement.dataset.y;
+          let y = e.target.parentElement.dataset.y;
 
-        const axisButton = document.getElementById("axis-selector");
-        if (axisButton.dataset.direction === "horizontal") {
-          if (playerBoardObj.willFollowRules(length, x, y)) {
-            playerBoardObj.placeShip(length, x, y);
+          const axisButton = document.getElementById("axis-selector");
+          if (axisButton.dataset.direction === "horizontal") {
+            if (playerBoardObj.willFollowRules(length, x, y)) {
+              playerBoardObj.placeShip(length, x, y);
 
-            resolve();
-          } else {
-            asd(resolve);
-          }
-        } else if (axisButton.dataset.direction === "vertical") {
-          if (playerBoardObj.willFollowRulesVertically(length, x, y)) {
-            playerBoardObj.placeShipVertically(length, x, y);
+              resolve();
+            } else {
+              asd(resolve);
+            }
+          } else if (axisButton.dataset.direction === "vertical") {
+            if (playerBoardObj.willFollowRulesVertically(length, x, y)) {
+              playerBoardObj.placeShipVertically(length, x, y);
 
-            resolve();
-          } else {
-            asd(resolve);
+              resolve();
+            } else {
+              asd(resolve);
+            }
           }
         }
       },
+
       { once: true }
     );
   });

@@ -94,7 +94,6 @@ function gameboardFactory() {
   };
 
   const reciveAttack = (x, y) => {
-    //console.log("initializing reciveAtackk method");
     if (typeof board[y][x] === "object") {
       if (board[y][x].destroyed !== true) {
         board[y][x].hit();
@@ -103,9 +102,6 @@ function gameboardFactory() {
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
-
-      /*  missedShoots.push([y, x]);
-      console.log(missedShoots); */
     } else {
       return "repetido";
     }
@@ -114,7 +110,6 @@ function gameboardFactory() {
   const willFollowRules = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
-        console.log(board[+x + i]);
         if (typeof board[y][+x + i] === "object") {
           return true;
         }

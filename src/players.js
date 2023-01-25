@@ -44,20 +44,25 @@ function playerAttack(computerBoardObj) {
     computerBoard.addEventListener(
       "click",
       (e) => {
-        let x = e.target.dataset.x;
-        let y = e.target.parentElement.dataset.y;
-
-        console.log(x);
-        console.log(y);
-
-        if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
-          computerBoardObj.reciveAttack(x, y);
-          resolve();
+        if (
+          e.target.id === "computerBoard" ||
+          e.target.classList.contains("row")
+        ) {
+          asd(resolve);
         } else {
-          console.log("repetido intenta denuevo");
-          asd(resolve, reject);
+          let x = e.target.dataset.x;
+          let y = e.target.parentElement.dataset.y;
+
+          if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
+            computerBoardObj.reciveAttack(x, y);
+            resolve();
+          } else {
+            console.log("repetido intenta denuevo");
+            asd(resolve, reject);
+          }
         }
       },
+
       { once: true }
     );
   });
