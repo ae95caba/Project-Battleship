@@ -77,46 +77,4 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   }
 } */
 
-function domPlaceShip(length, playerBoardId, playerBoardObj) {
-  return new Promise(function asd(resolve) {
-    const playerBoard = document.getElementById(playerBoardId);
-    playerBoard.addEventListener(
-      "click",
-      (e) => {
-        if (
-          e.target.classList.contains("board") ||
-          e.target.classList.contains("row")
-        ) {
-          asd(resolve);
-        } else {
-          let x = e.target.dataset.x;
-
-          let y = e.target.parentElement.dataset.y;
-
-          const axisButton = document.getElementById("axis-selector");
-          if (axisButton.dataset.direction === "horizontal") {
-            if (playerBoardObj.willFollowRules(length, x, y)) {
-              playerBoardObj.placeShip(length, x, y);
-
-              resolve();
-            } else {
-              asd(resolve);
-            }
-          } else if (axisButton.dataset.direction === "vertical") {
-            if (playerBoardObj.willFollowRulesVertically(length, x, y)) {
-              playerBoardObj.placeShipVertically(length, x, y);
-
-              resolve();
-            } else {
-              asd(resolve);
-            }
-          }
-        }
-      },
-
-      { once: true }
-    );
-  });
-}
-
-export { domRenderBoard, domPlaceShip, domPopulateBoard, axisButton };
+export { domRenderBoard, domPopulateBoard, axisButton };

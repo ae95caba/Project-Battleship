@@ -47,6 +47,7 @@ function gameboardFactory() {
         },
       };
     }
+    console.log(fleet);
   };
 
   const placeShipVertically = function (length, x, y) {
@@ -91,6 +92,7 @@ function gameboardFactory() {
         },
       };
     }
+    console.log(fleet);
   };
 
   const reciveAttack = (x, y) => {
@@ -118,7 +120,6 @@ function gameboardFactory() {
     };
 
     const willOverflow = function (length, x) {
-      console.log(length + +x > 10);
       if (length + +x > 10) {
         return true;
       } else return false;
@@ -133,7 +134,6 @@ function gameboardFactory() {
   const willFollowRulesVertically = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
-        console.log(board[+y + i]);
         if (typeof board[+y + i][x] === "object") {
           return true;
         }
@@ -157,6 +157,7 @@ function gameboardFactory() {
   };
 
   const isGameOver = function () {
+    console.log(this.fleet);
     return (
       this.fleet.carrier.isSunk() &&
       this.fleet.patrolBoat.isSunk() &&

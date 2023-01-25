@@ -13,7 +13,6 @@ async function gameLoop() {
 
   computer.placeShip(computerBoardObj, 2);
   //console.log(computerBoardObj.fleet);
-
   console.log("place your 2 ship");
   await player.placeShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
@@ -47,8 +46,8 @@ async function gameLoop() {
   for (
     let turn = 1;
     //Create conditions so that the game ends once one players ships have all been sunk. This function is appropriate for the Game module.
-    computerBoardObj.isGameOver() == false &&
-    playerBoardObj.isGameOver() == false;
+    computerBoardObj.isGameOver() === false &&
+    playerBoardObj.isGameOver() === false;
     turn++
   ) {
     console.log("awaiting player attack");
@@ -57,11 +56,9 @@ async function gameLoop() {
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
 
     console.log("computerAttackNExt");
-    console.log(computer);
+
     computer.attack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");
-
-    console.log(computerBoardObj.isGameOver());
   }
 
   alert("game over");
