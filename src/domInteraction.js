@@ -12,6 +12,7 @@ function axisButton() {
 function domRenderBoard(id) {
   const board = document.createElement("div");
   board.id = id;
+  board.classList.add("board");
   for (let r = 0; r < 10; r++) {
     const row = document.createElement("div");
     row.classList.add(`row-${r}`, "row");
@@ -49,7 +50,7 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   }
 }
 
-function attackWithClick(domBoard, computerBoardObj) {
+/* function attackWithClick(domBoard, computerBoardObj) {
   domBoard.addEventListener("click", (e) => {
     let x = e.target.dataset.x;
     let y = e.target.parentElement.dataset.y;
@@ -66,7 +67,7 @@ function attackWithClick(domBoard, computerBoardObj) {
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
 
     setTimeout(() => {
-      computerAttack();
+      computerttack();
       domPopulateBoard(playerBoardObj, "#playerBoard");
       letThemPlay();
     }, 2000);
@@ -74,7 +75,7 @@ function attackWithClick(domBoard, computerBoardObj) {
     alert("repetido");
     letThemPlay();
   }
-}
+} */
 
 function domPlaceShip(length, playerBoardId, playerBoardObj) {
   return new Promise(function asd(resolve) {
@@ -83,7 +84,7 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
       "click",
       (e) => {
         if (
-          e.target.id === "playerBoard" ||
+          e.target.classList.contains("board") ||
           e.target.classList.contains("row")
         ) {
           asd(resolve);
@@ -118,10 +119,4 @@ function domPlaceShip(length, playerBoardId, playerBoardObj) {
   });
 }
 
-export {
-  domRenderBoard,
-  domPlaceShip,
-  domPopulateBoard,
-  attackWithClick,
-  axisButton,
-};
+export { domRenderBoard, domPlaceShip, domPopulateBoard, axisButton };

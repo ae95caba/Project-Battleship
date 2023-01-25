@@ -1,16 +1,10 @@
 import {
   domRenderBoard,
   domPopulateBoard,
-  attackWithClick,
   domPlaceShip,
 } from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
-import {
-  computerAttack,
-  playerTurn,
-  playerAttack,
-  computerPlaceShip,
-} from "./players";
+import { computer, playerTurn, playerAttack } from "./players";
 
 async function gameLoop() {
   //2 - The game loop should set up a new game by creating Players and Gameboards. For now just populate each Gameboard with predetermined coordinates. You can implement a system for allowing players to place their ships later.
@@ -21,26 +15,26 @@ async function gameLoop() {
   const playerBoardObj = gameboardFactory();
   const computerBoardObj = gameboardFactory();
 
-  computerPlaceShip(computerBoardObj, 2);
+  computer.placeShip(computerBoardObj, 2);
   //console.log(computerBoardObj.fleet);
 
   console.log("place your 2 ship");
   await domPlaceShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
-  computerPlaceShip(computerBoardObj, 3);
+  computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
   console.log("place your 3 ship");
   await domPlaceShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
-  computerPlaceShip(computerBoardObj, 4);
+  computer.placeShip(computerBoardObj, 4);
   //console.log(computerBoardObj.fleet);
   console.log("place your 4 ship");
   await domPlaceShip(4, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
-  computerPlaceShip(computerBoardObj, 5);
+  computer.placeShip(computerBoardObj, 5);
   //console.log(computerBoardObj.fleet);
   console.log("place your 5 ship");
   await domPlaceShip(5, "playerBoard", playerBoardObj);
@@ -67,8 +61,8 @@ async function gameLoop() {
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
 
     console.log("computerAttackNExt");
-
-    computerAttack(playerBoardObj);
+    console.log(computer);
+    computer.attack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");
 
     console.log(computerBoardObj.isGameOver());
