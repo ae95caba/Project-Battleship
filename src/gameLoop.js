@@ -1,10 +1,6 @@
-import {
-  domRenderBoard,
-  domPopulateBoard,
-  domPlaceShip,
-} from "./domInteraction";
+import { domRenderBoard, domPopulateBoard } from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
-import { computer, playerTurn, playerAttack } from "./players";
+import { computer, player } from "./players";
 
 async function gameLoop() {
   //2 - The game loop should set up a new game by creating Players and Gameboards. For now just populate each Gameboard with predetermined coordinates. You can implement a system for allowing players to place their ships later.
@@ -19,25 +15,25 @@ async function gameLoop() {
   //console.log(computerBoardObj.fleet);
 
   console.log("place your 2 ship");
-  await domPlaceShip(2, "playerBoard", playerBoardObj);
+  await player.placeShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
   console.log("place your 3 ship");
-  await domPlaceShip(3, "playerBoard", playerBoardObj);
+  await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 4);
   //console.log(computerBoardObj.fleet);
   console.log("place your 4 ship");
-  await domPlaceShip(4, "playerBoard", playerBoardObj);
+  await player.placeShip(4, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 5);
   //console.log(computerBoardObj.fleet);
   console.log("place your 5 ship");
-  await domPlaceShip(5, "playerBoard", playerBoardObj);
+  await player.placeShip(5, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   //3-  We’ll leave the HTML implementation up to you for now, but you should display both the player’s boards and render them using information from the Gameboard class.
@@ -57,7 +53,7 @@ async function gameLoop() {
   ) {
     console.log("awaiting player attack");
 
-    await playerAttack(computerBoardObj);
+    await player.attack(computerBoardObj);
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
 
     console.log("computerAttackNExt");
