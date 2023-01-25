@@ -32,3 +32,22 @@ computerBoard.addEventListener(
         playerTurn();
       }
     },
+
+
+				computer ai:
+				if (hit){
+					check valid adyacent move
+							start by left{
+									if (hit) keep left
+											 repeat 
+									if(!hit) check right of the first hit
+											if(hit) keep right
+														repeat till no more (hit)}
+								try with top{
+										if (hit) keep top
+											 repeat 
+									if(!hit) check bottom of the first hit
+											if(hit) keep bottom
+														repeat till no more (hit)
+								}
+				}
