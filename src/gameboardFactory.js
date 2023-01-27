@@ -97,17 +97,17 @@ function gameboardFactory() {
 
   const reciveAttack = (x, y) => {
     if (typeof board[y][x] === "object") {
-      if (board[y][x].destroyed !== true) {
+      if (board[y][x].destroyed === false) {
         board[y][x].hit();
         return "hit";
-      } else {
-        return "repetido";
+      } else if (board[y][x].destroyed === true) {
+        return "repetido, habia un destroyed";
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
       return "missed";
-    } else {
-      return "repetido";
+    } else if (board[y][x] === "missed") {
+      return "repetido, habia un missed";
     }
   };
 

@@ -1,7 +1,7 @@
 const computerAi = function (hit) {
-	if (hit){
+	if (chaseMode.state){
 		//chase mode
-		const hitCordinates = 
+		try on
 	}
 }
 export { computerAi };

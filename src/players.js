@@ -1,12 +1,16 @@
 let computer = {
   chaseMode: {
+    isReversed: false,
     state: false,
-    chaseSubject: { x, y },
-    newCoordinate: { x, y },
+    chaseSubject: { x: undefined, y: undefined }, //x,y
+    newCoordinate: {}, //x,y
     validMoves: ["left", "right", "top", "bottom"],
+    followDirection: undefined,
+    firstChaseSubject: {}, //x,y
+    originalValidMoves: [],
   },
   attack: function (playerBoardObj) {
-    if (this.chaseMode.state) {
+    /* if (this.chaseMode.state) {
       //remove direcctions that will be outside the board
       switch (this.chaseSubject.x) {
         case 0:
@@ -103,11 +107,97 @@ let computer = {
       });
 
       //choose a direction
-      const directionIndex = this.randomIntFromInterval(
-        0,
-        this.chaseMode.validMoves.length - 1
-      );
-      const direction = this.chaseMode.validMoves(directionIndex);
+      if (followDirection) {
+        if (this.chaseMode.validMoves.includes(followDirection)) {
+          const direction = followDirection;
+        } else {
+          //go oposite direction from the start\
+          // it should be saved, the valid moves from the original chase objective
+          //if it is not posible, end here
+          switch (direction) {
+            case "left":
+              {
+                if (this.chaseMode.originalValidMoves.includes("right")) {
+                  direction = "right";
+                  this.chaseMode.isReversed = true;
+                } else {
+                  this.chaseMode.state = false;
+                  //reset valid moves
+                  this.chaseMode.validMoves = [
+                    "left",
+                    "right",
+                    "top",
+                    "bottom",
+                  ];
+                  return "chase mode ended";
+                }
+              }
+              break;
+            case "right":
+              {
+                if (this.chaseMode.originalValidMoves.includes("left")) {
+                  direction = "left";
+                  this.chaseMode.isReversed = true;
+                } else {
+                  this.chaseMode.state = false;
+                  //reset valid moves
+                  this.chaseMode.validMoves = [
+                    "left",
+                    "right",
+                    "top",
+                    "bottom",
+                  ];
+                  return "chase mode ended";
+                }
+              }
+              break;
+            case "top":
+              {
+                if (this.chaseMode.originalValidMoves.includes("bottom")) {
+                  direction = "bottom";
+                  this.chaseMode.isReversed = true;
+                } else {
+                  this.chaseMode.state = false;
+                  //reset valid moves
+                  this.chaseMode.validMoves = [
+                    "left",
+                    "right",
+                    "top",
+                    "bottom",
+                  ];
+                  return "chase mode ended";
+                }
+              }
+              break;
+            case "bottom":
+              {
+                if (this.chaseMode.originalValidMoves.includes("top")) {
+                  direction = "top";
+                  this.chaseMode.isReversed = true;
+                } else {
+                  this.chaseMode.state = false;
+                  //reset valid moves
+                  this.chaseMode.validMoves = [
+                    "left",
+                    "right",
+                    "top",
+                    "bottom",
+                  ];
+                  return "chase mode ended";
+                }
+              }
+              break;
+          }
+          this.chaseMode.chaseSubject = this.chaseMode.firstChaseSubject;
+        }
+      } else {
+        const directionIndex = this.randomIntFromInterval(
+          0,
+          this.chaseMode.validMoves.length - 1
+        );
+        const direction = this.chaseMode.validMoves(directionIndex);
+        this.chaseMode.originalValidMoves = this.chaseMode.validMoves;
+      }
 
       //make a new coordinate to apply the choosed direction
 
@@ -151,78 +241,55 @@ let computer = {
               this.chaseMode.newCoordinate.x,
               this.chaseMode.newCoordinate.y
             );
-            (this.chaseMode.chaseSubject.x = this.chaseMode.newCoordinate.x),
-              (this.chaseMode.chaseSubject.y = this.chaseMode.newCoordinate.y);
+            this.chaseMode.firstChaseSubject.x = this.chaseMode.chaseSubject.x;
+            this.chaseMode.firstChaseSubject.y = this.chaseMode.chaseSubject.y;
+            this.chaseMode.chaseSubject.x = this.chaseMode.newCoordinate.x;
+
+            this.chaseMode.chaseSubject.y = this.chaseMode.newCoordinate.y;
+
+            //reset valid moves
+            this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
+
             //keep in direction
+            this.chaseMode.followDirection = direction;
           }
           break;
         case "missed":
           {
-            //get random number choosed from array moves and deleted from the array so only the left posible move remains
+            //if runing form the oposite direction, the chase mode should stop
+            if (this.chaseMode.isReversed) {
+              this.chaseMode.state = false;
+            }
+            //get random number choosed from array moves and deleted from
+            //the array so only the left posible move remains
+            //its not necesary beacause the function detects missed shoots
+            playerBoardObj.reciveAttack(
+              this.chaseMode.newCoordinate.x,
+              this.chaseMode.newCoordinate.y
+            );
           }
           break;
       }
       //////////////////////////////////////
-      if (this.randomIntFromInterval(0, 1) === 0) {
-        //move on x axis
-        //picks a random direcction left of right
-        const newX =
-          this.chaseMode.chaseSubject.x +
-          this.chaseMode.validXMoves[
-            this.randomIntFromInterval(0, this.chaseMode.validXMoves.length - 1)
-          ];
-        ///
-        switch (playerBoardObj.reciveAttack(newX, y)) {
-          case "hit":
-            {
-              playerBoardObj.reciveAttack(newX, y);
-              this.chaseSubject.x = newX;
-            }
-            break;
-          case "missed":
-            {
-              //get random number choosed from array moves and deleted from the array so only the left posible move remains
-            }
-            break;
-          case "repetido":
-            {
-            }
-            break;
-        }
-      } else {
-        //move on y axis
-      }
-      //////////////////////////////////
-      if (this.chaseMode.x + 1 <= 9) {
-        //mueve 1 a la derecha
-        if (
-          playerBoardObj.reciveAttack(
-            this.chaseSubject.x + 1,
-            this.chaseSubject.y
-          ) === "hit"
-        ) {
-          playerBoardObj.reciveAttack(
-            this.chaseSubject.x + 1,
-            this.chaseSubject.y
-          );
-          this.chaseSubject.x += 1;
 
-          return "chase mode is on";
-        }
-      }
-    }
+      //////////////////////////////////
+    } */
     const x = this.randomIntFromInterval(0, 9);
     const y = this.randomIntFromInterval(0, 9);
 
     if (playerBoardObj.reciveAttack(x, y) === "hit") {
-      // || playerBoardObj.reciveAttack(x, y) === "missed") {
+      console.log("computer hit");
       playerBoardObj.reciveAttack(x, y);
-      this.chaseMode.state = true;
+      /*  this.chaseMode.state = true;
       this.chaseMode.chaseSubject.x = x;
-      this.chaseMode.chaseSubject.y = y;
+      this.chaseMode.chaseSubject.y = y; */
     } else if (playerBoardObj.reciveAttack(x, y) === "missed") {
+      console.log("computer misssed");
       playerBoardObj.reciveAttack(x, y);
     } else if (playerBoardObj.reciveAttack(x, y) === "repetido") {
+      console.log(x);
+      console.log(y);
+      console.log(playerBoardObj.reciveAttack(x, y));
       console.log("computer repetido");
       computer.attack(playerBoardObj);
     }
