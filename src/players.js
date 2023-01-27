@@ -279,21 +279,26 @@ let computer = {
     const x = this.randomIntFromInterval(0, 9);
     const y = this.randomIntFromInterval(0, 9);
 
-    if (playerBoardObj.reciveAttack(x, y) === "hit") {
-      console.log("computer hit");
-      playerBoardObj.reciveAttack(x, y);
-      this.chaseMode.state = true;
-      this.chaseMode.chaseSubject.x = x;
-      this.chaseMode.chaseSubject.y = y;
-    } else if (playerBoardObj.reciveAttack(x, y) === "missed") {
-      console.log("computer misssed");
-      playerBoardObj.reciveAttack(x, y);
-    } else if (playerBoardObj.reciveAttack(x, y) === "repetido") {
-      console.log(x);
-      console.log(y);
-      console.log(playerBoardObj.reciveAttack(x, y));
-      console.log("computer repetido");
-      computer.attack(playerBoardObj);
+    switch (playerBoardObj.reciveAttack(x, y)) {
+      case "hit":
+        {
+          console.log("computer hit");
+
+          this.chaseMode.state = true;
+          this.chaseMode.chaseSubject.x = x;
+          this.chaseMode.chaseSubject.y = y;
+        }
+        break;
+      case "missed":
+        {
+          console.log("computer missed");
+        }
+        break;
+      case "repetido":
+        {
+          computer.attack(playerBoardObj);
+        }
+        break;
     }
   },
   placeShip: function (computerBoardObj, length) {
