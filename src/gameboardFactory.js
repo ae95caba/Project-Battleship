@@ -99,11 +99,13 @@ function gameboardFactory() {
     if (typeof board[y][x] === "object") {
       if (board[y][x].destroyed !== true) {
         board[y][x].hit();
+        return "hit";
       } else {
         return "repetido";
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
+      return "missed";
     } else {
       return "repetido";
     }

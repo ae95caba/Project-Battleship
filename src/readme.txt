@@ -36,9 +36,9 @@ computerBoard.addEventListener(
 
 				computer ai:
 				if (hit){
-					check valid adyacent move
+					//check valid adyacent move
 							start by left{
-									if (hit) keep left
+									if (hit){ keep left
 											 repeat 
 									if(!hit) check right of the first hit
 											if(hit) keep right
@@ -51,3 +51,11 @@ computerBoard.addEventListener(
 														repeat till no more (hit)
 								}
 				}
+
+			once it hits
+				make array with valid moves(left,right,etc) or 2 arrays
+				pick randomly a direction between the valid moves array
+				make a new coordinate to apply the choosed direction
+				use the new coordinate
+
+			
