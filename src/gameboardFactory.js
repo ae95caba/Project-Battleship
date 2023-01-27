@@ -102,14 +102,14 @@ function gameboardFactory() {
         board[y][x].hit();
         return "hit";
       } else if (board[y][x].destroyed === true) {
-        return "repetido, habia un destroyed";
+        return "repetido";
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
       alert("missed");
       return "missed";
     } else if (board[y][x] === "missed") {
-      return "repetido, habia un missed";
+      return "repetido";
     }
   };
 

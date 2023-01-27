@@ -332,7 +332,7 @@ let computer = {
 let player = {
   attack: function (computerBoardObj) {
     console.log("playerAttack function");
-    return new Promise(function asd(resolve, reject) {
+    return new Promise(function asd(resolve) {
       const computerBoard = document.getElementById("computerBoard");
       computerBoard.addEventListener(
         "click",
@@ -346,11 +346,23 @@ let player = {
             let x = e.target.dataset.x;
             let y = e.target.parentElement.dataset.y;
 
-            if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
-              resolve();
-            } else {
-              console.log("repetido intenta denuevo");
-              asd(resolve, reject);
+            switch (computerBoardObj.reciveAttack(x, y)) {
+              case "hit":
+                {
+                  resolve();
+                }
+                break;
+              case "missed":
+                {
+                  resolve();
+                }
+                break;
+              case "repetido":
+                {
+                  console.log("repetido intenta denuevo");
+                  asd(resolve);
+                }
+                break;
             }
           }
         },
