@@ -10,9 +10,9 @@ let computer = {
     originalValidMoves: [],
   },
   attack: function (playerBoardObj) {
-    /* if (this.chaseMode.state) {
+    if (this.chaseMode.state) {
       //remove direcctions that will be outside the board
-      switch (this.chaseSubject.x) {
+      switch (this.chaseMode.chaseSubject.x) {
         case 0:
           {
             const index = this.chaseMode.validMoves.indexOf("left");
@@ -28,7 +28,7 @@ let computer = {
           }
           break;
       }
-      switch (this.chaseSubject.y) {
+      switch (this.chaseMode.chaseSubject.y) {
         case 0:
           {
             const index = this.chaseMode.validMoves.indexOf("top");
@@ -107,7 +107,8 @@ let computer = {
       });
 
       //choose a direction
-      if (followDirection) {
+      if (this.chaseMode.followDirection) {
+        alert(`followDIrection is :${this.chaseMode.followDirection}`);
         if (this.chaseMode.validMoves.includes(followDirection)) {
           const direction = followDirection;
         } else {
@@ -195,12 +196,13 @@ let computer = {
           0,
           this.chaseMode.validMoves.length - 1
         );
-        const direction = this.chaseMode.validMoves(directionIndex);
+        var direction = this.chaseMode.validMoves[directionIndex];
+        console.log(`direction is : ${direction}`);
         this.chaseMode.originalValidMoves = this.chaseMode.validMoves;
       }
 
       //make a new coordinate to apply the choosed direction
-
+      console.log(direction);
       switch (direction) {
         case "left":
           {
@@ -273,16 +275,16 @@ let computer = {
       //////////////////////////////////////
 
       //////////////////////////////////
-    } */
+    }
     const x = this.randomIntFromInterval(0, 9);
     const y = this.randomIntFromInterval(0, 9);
 
     if (playerBoardObj.reciveAttack(x, y) === "hit") {
       console.log("computer hit");
       playerBoardObj.reciveAttack(x, y);
-      /*  this.chaseMode.state = true;
+      this.chaseMode.state = true;
       this.chaseMode.chaseSubject.x = x;
-      this.chaseMode.chaseSubject.y = y; */
+      this.chaseMode.chaseSubject.y = y;
     } else if (playerBoardObj.reciveAttack(x, y) === "missed") {
       console.log("computer misssed");
       playerBoardObj.reciveAttack(x, y);
@@ -340,7 +342,6 @@ let player = {
             let y = e.target.parentElement.dataset.y;
 
             if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
-              computerBoardObj.reciveAttack(x, y);
               resolve();
             } else {
               console.log("repetido intenta denuevo");

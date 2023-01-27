@@ -96,6 +96,7 @@ function gameboardFactory() {
   };
 
   const reciveAttack = (x, y) => {
+    console.log("reciveAttackMethod");
     if (typeof board[y][x] === "object") {
       if (board[y][x].destroyed === false) {
         board[y][x].hit();
