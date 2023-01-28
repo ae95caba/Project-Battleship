@@ -8,6 +8,19 @@ function axisButton() {
     }
   });
 }
+function boardCoordinates(position) {
+  let cellContainer = document.createElement("div");
+  cellContainer.id = "cell-container";
+  cellContainer.classList.add(position);
+  for (let i = 0; i < 10; i++) {
+    const cell = document.createElement("div");
+    cell.innerText = i;
+    cell.classList.add("cell");
+
+    cellContainer.appendChild(cell);
+  }
+  return cellContainer;
+}
 
 function domRenderBoard(id) {
   const board = document.createElement("div");
@@ -77,4 +90,4 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   }
 } */
 
-export { domRenderBoard, domPopulateBoard, axisButton };
+export { domRenderBoard, domPopulateBoard, axisButton, boardCoordinates };

@@ -14,7 +14,9 @@ const ai = {
   },
   //this will modify the array validMoves
   removeInvalidDirections: function (playerBoardObj) {
-    alert(`valid moves before 2nd filter : ${this.chaseMode.validMoves}`);
+    alert(
+      `valid moves before 2nd filter : ${this.chaseMode.validMoves} with axis on ${this.chaseMode.chaseSubject.x},${this.chaseMode.chaseSubject.y}`
+    );
     //remove direcctions that will be outside the board
     switch (this.chaseMode.chaseSubject.x) {
       case 0:
@@ -54,16 +56,17 @@ const ai = {
       switch (move) {
         case "left":
           {
+            console.log(
+              `left move is : ${playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x - 1,
+                this.chaseMode.chaseSubject.y
+              )}`
+            );
             if (
-              playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.x - 1
-              ] === "missed" ||
-              (typeof playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.x - 1
-              ] === "object" &&
-                playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                  this.chaseMode.chaseSubject.x - 1
-                ].destroyed === true)
+              playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x - 1,
+                this.chaseMode.chaseSubject.y
+              ) === "repetido"
             ) {
               const index = this.chaseMode.validMoves.indexOf("left");
 
@@ -73,16 +76,17 @@ const ai = {
           break;
         case "right":
           {
+            console.log(
+              `right move is : ${playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x + 1,
+                this.chaseMode.chaseSubject.y
+              )}`
+            );
             if (
-              playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.x + 1
-              ] === "missed" ||
-              (typeof playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.x + 1
-              ] === "object" &&
-                playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                  this.chaseMode.chaseSubject.x + 1
-                ].destroyed === true)
+              playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x + 1,
+                this.chaseMode.chaseSubject.y
+              ) === "repetido"
             ) {
               const index = this.chaseMode.validMoves.indexOf("right");
 
@@ -92,16 +96,17 @@ const ai = {
           break;
         case "top":
           {
+            console.log(
+              `top move is : ${playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x,
+                this.chaseMode.chaseSubject.y - 1
+              )}`
+            );
             if (
-              playerBoardObj.board[this.chaseMode.chaseSubject.y][
+              playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x,
                 this.chaseMode.chaseSubject.y - 1
-              ] === "missed" ||
-              (typeof playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.y - 1
-              ] === "object" &&
-                playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                  this.chaseMode.chaseSubject.y - 1
-                ].destroyed === true)
+              ) === "repetido"
             ) {
               const index = this.chaseMode.validMoves.indexOf("top");
 
@@ -111,16 +116,17 @@ const ai = {
           break;
         case "bottom":
           {
+            console.log(
+              `bottom move is : ${playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x,
+                this.chaseMode.chaseSubject.y + 1
+              )}`
+            );
             if (
-              playerBoardObj.board[this.chaseMode.chaseSubject.y][
+              playerBoardObj.willFollowRulesForAttacking(
+                this.chaseMode.chaseSubject.x,
                 this.chaseMode.chaseSubject.y + 1
-              ] === "missed" ||
-              (typeof playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                this.chaseMode.chaseSubject.y + 1
-              ] === "object" &&
-                playerBoardObj.board[this.chaseMode.chaseSubject.y][
-                  this.chaseMode.chaseSubject.y + 1
-                ].destroyed === true)
+              ) === "repetido"
             ) {
               const index = this.chaseMode.validMoves.indexOf("bottom");
 
@@ -130,7 +136,10 @@ const ai = {
           break;
       }
     });
-    alert(`valid moves after 2nd filter : ${this.chaseMode.validMoves}`);
+    alert(
+      `valid moves after 2nd filter : ${this.chaseMode.validMoves}  with axis on ${this.chaseMode.chaseSubject.x},${this.chaseMode.chaseSubject.y}`
+    );
+    console.log(playerBoardObj.board);
   },
   //pick a direction
   //this will return a direction
@@ -242,7 +251,9 @@ const ai = {
         0,
         this.chaseMode.validMoves.length - 1
       );
-      return this.chaseMode.validMoves[directionIndex];
+      const direction = this.chaseMode.validMoves[directionIndex];
+      alert(`randomly selected direction : ${direction}`);
+      return direction;
     }
   },
   //transform direction into coordinate

@@ -1,4 +1,8 @@
-import { domRenderBoard, domPopulateBoard } from "./domInteraction";
+import {
+  domRenderBoard,
+  domPopulateBoard,
+  boardCoordinates,
+} from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
 import { computer, player } from "./players";
 
@@ -6,8 +10,30 @@ async function gameLoop() {
   //2 - The game loop should set up a new game by creating Players and Gameboards. For now just populate each Gameboard with predetermined coordinates. You can implement a system for allowing players to place their ships later.
 
   const content = document.getElementById("content");
-  content.appendChild(domRenderBoard("playerBoard")); // make empty board
-  content.appendChild(domRenderBoard("computerBoard")); // make empty board
+  //////////////////////////////////
+
+  const playerBoardContainer = document.getElementById(
+    "player-board-container"
+  );
+  playerBoardContainer.appendChild(boardCoordinates("left"));
+  playerBoardContainer.appendChild(boardCoordinates("top"));
+  playerBoardContainer.appendChild(domRenderBoard("playerBoard")); // make empty board
+  playerBoardContainer.appendChild(boardCoordinates("bottom"));
+  playerBoardContainer.appendChild(boardCoordinates("right"));
+  //////////////////////////////////////
+  const computerBoardContainer = document.getElementById(
+    "computer-board-container"
+  );
+  computerBoardContainer.appendChild(boardCoordinates("left"));
+  computerBoardContainer.appendChild(boardCoordinates("top"));
+  computerBoardContainer.appendChild(domRenderBoard("computerBoard")); // make empty board
+  computerBoardContainer.appendChild(boardCoordinates("right"));
+  computerBoardContainer.appendChild(boardCoordinates("bottom"));
+
+  content.appendChild(playerBoardContainer);
+  content.appendChild(computerBoardContainer);
+  /////////////////
+
   const playerBoardObj = gameboardFactory();
   const computerBoardObj = gameboardFactory();
 

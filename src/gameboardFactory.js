@@ -113,6 +113,20 @@ function gameboardFactory() {
     }
   };
 
+  const willFollowRulesForAttacking = (x, y) => {
+    if (typeof board[y][x] === "object") {
+      if (board[y][x].destroyed === false) {
+        return "hit";
+      } else if (board[y][x].destroyed === true) {
+        return "repetido";
+      }
+    } else if (board[y][x] === undefined) {
+      return "missed";
+    } else if (board[y][x] === "missed") {
+      return "repetido";
+    }
+  };
+  //for placing
   const willFollowRules = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
@@ -135,6 +149,7 @@ function gameboardFactory() {
     }
   };
 
+  //for placing
   const willFollowRulesVertically = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
@@ -171,6 +186,7 @@ function gameboardFactory() {
   };
 
   return {
+    willFollowRulesForAttacking,
     board,
     fleet,
     placeShip,

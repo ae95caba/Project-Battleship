@@ -1,4 +1,4 @@
-import { computerAi } from "./computerAi";
+import { computerAi } from "./ai";
 
 it("should be able to keep track of missed shots2", () => {
   let gameboard = gameboardFactory();

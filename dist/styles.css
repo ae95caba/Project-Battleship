@@ -1,0 +1,54 @@
+.column,
+.cell {
+  border: 2px solid red;
+  width: 50px;
+  height: 50px;
+}
+
+.cell {
+  border: 2px black solid !important;
+}
+
+#content {
+  display: flex;
+  gap: 2rem;
+}
+
+#player-board-container,
+#computer-board-container {
+  display: grid;
+  grid-template-rows: min-content min-content min-content;
+  grid-template-columns: auto auto auto;
+}
+.row {
+  display: flex;
+}
+
+.top {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  display: flex;
+  align-self: flex-end;
+}
+
+.left {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+.bottom {
+  grid-column: 2/3;
+  grid-row: 3/4;
+  display: flex;
+  align-self: flex-start;
+}
+
+.right {
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+
+.board {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
