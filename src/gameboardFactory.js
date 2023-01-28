@@ -3,7 +3,6 @@ import shipFactory from "./shipFactory";
 function gameboardFactory() {
   let board = [[], [], [], [], [], [], [], [], [], []];
   let fleet = {};
-  let missedShoots = [];
 
   const placeShip = function (length, x, y) {
     let currentShip;
@@ -96,7 +95,6 @@ function gameboardFactory() {
   };
 
   const reciveAttack = (x, y) => {
-    console.log("reciveAttackMethod");
     if (typeof board[y][x] === "object") {
       if (board[y][x].destroyed === false) {
         board[y][x].hit();
@@ -106,7 +104,7 @@ function gameboardFactory() {
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
-      console.log("missed");
+
       return "missed";
     } else if (board[y][x] === "missed") {
       return "repetido";
@@ -176,7 +174,6 @@ function gameboardFactory() {
   };
 
   const isGameOver = function () {
-    console.log(this.fleet);
     return (
       this.fleet.carrier.isSunk() &&
       this.fleet.patrolBoat.isSunk() &&
