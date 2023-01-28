@@ -106,7 +106,7 @@ function gameboardFactory() {
       }
     } else if (board[y][x] === undefined) {
       board[y][x] = "missed";
-      alert("missed");
+      console.log("missed");
       return "missed";
     } else if (board[y][x] === "missed") {
       return "repetido";

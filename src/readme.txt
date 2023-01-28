@@ -58,4 +58,4 @@ computerBoard.addEventListener(
 				make a new coordinate to apply the choosed direction
 				use the new coordinate
 
-			
+			ai keeps with direction but gets stuck on grey box and donest move
