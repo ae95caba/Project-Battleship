@@ -14,6 +14,21 @@ const ai = {
     isChasing: false,
   },
   //this will modify the array validMoves
+  addValidDirections: function (playerBoardObj) {
+    this.chaseMode.validMoves = [];
+    const posibleDirections = ["left", "right", "top", "bottom"];
+    posibleDirections.forEach((direction) => {
+      if (
+        playerBoardObj.attackResultOnly(
+          this.coordinates(direction).x,
+          this.coordinates(direction).y
+        ) !== "repetido"
+      ) {
+        this.chaseMode.validMoves.push(direction);
+      }
+    });
+    alert(`valid directions are ${this.chaseMode.validMoves}`);
+  },
   removeInvalidDirections: function (playerBoardObj) {
     this.chaseMode.invalidDirections = [];
     //remove direcctions that will be outside the board
@@ -51,23 +66,6 @@ const ai = {
     }
     //remove the directions that will not follow rules !!!
     //only in chaseSubject
-    this.chaseMode.validMoves.forEach((direction) => {
-      if (
-        playerBoardObj.willFollowRulesForAttacking(
-          this.coordinates(direction).x,
-          this.coordinates(direction).y
-        ) === "repetido"
-      ) {
-        this.chaseMode.invalidDirections.push(direction);
-        const index = this.chaseMode.validMoves.indexOf(direction);
-
-        this.chaseMode.validMoves.splice(index, 1);
-      }
-      alert(
-        `${this.chaseMode.validMoves} in ${this.chaseMode.chaseSubject.x},${this.chaseMode.chaseSubject.y}`
-      );
-    });
-    alert(`invalid array is : ${this.chaseMode.invalidDirections}`);
   },
   //pick a direction
   //this will return a direction
@@ -83,8 +81,10 @@ const ai = {
         console.log(`the follow direction is valid`);
         return this.chaseMode.followDirection;
       } else {
-        console.log("first valid direction");
-        return this.chaseMode.validMoves[0];
+        console.log("random direction");
+        this.chaseMode.state = false;
+        this.chaseMode.isChasing = false;
+        return undefined;
       }
 
       /* else {
@@ -173,22 +173,30 @@ const ai = {
           }
           this.chaseMode.chaseSubject = this.chaseMode.firstChaseSubject;
         } */
-    } else {
-      this.chaseMode.originalValidMoves = this.chaseMode.validMoves; //this is for reverse mode later
-      const directionIndex = computer.randomIntFromInterval(
-        0,
-        this.chaseMode.validMoves.length - 1
-      );
-      const direction = this.chaseMode.validMoves[directionIndex];
-      alert(this.chaseMode.validMoves);
-      alert(`randomly selected direction : ${direction}`);
-      return direction;
+    } else if (this.chaseMode.isChasing === false) {
+      if (this.chaseMode.validMoves.length >= 1) {
+        this.chaseMode.originalValidMoves = this.chaseMode.validMoves; //this is for reverse mode later
+        const directionIndex = computer.randomIntFromInterval(
+          0,
+          this.chaseMode.validMoves.length - 1
+        );
+        const direction = this.chaseMode.validMoves[directionIndex];
+
+        alert(`randomly selected direction : ${direction}`);
+        return direction;
+      } else if (this.chaseMode.validMoves.length === 0) {
+        this.chaseMode.state = false;
+        return undefined;
+      }
     }
   },
   //transform direction into coordinate
   //this will return a coordinate
   // {x,y}
   coordinates: function (direction) {
+    if (direction === undefined) {
+      return undefined;
+    }
     switch (direction) {
       case "left": {
         return {
@@ -228,6 +236,11 @@ const ai = {
     //attack;
     //save coordinates
     const coordinates = this.coordinates(direction);
+
+    if (coordinates === undefined) {
+      computer.attack(playerBoardObj);
+      return undefined;
+    }
 
     if (this.chaseMode.isChasing) {
       switch (playerBoardObj.reciveAttack(coordinates.x, coordinates.y)) {

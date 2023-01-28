@@ -111,7 +111,7 @@ function gameboardFactory() {
     }
   };
 
-  const willFollowRulesForAttacking = (x, y) => {
+  const attackResultOnly = (x, y) => {
     if (typeof board[y][x] === "object") {
       if (board[y][x].destroyed === false) {
         return "hit";
@@ -183,7 +183,7 @@ function gameboardFactory() {
   };
 
   return {
-    willFollowRulesForAttacking,
+    attackResultOnly,
     board,
     fleet,
     placeShip,

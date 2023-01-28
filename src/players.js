@@ -7,7 +7,8 @@ let computer = {
     if (this.ai.chaseMode.state === true) {
       //alert("ai is working");
 
-      this.ai.removeInvalidDirections(playerBoardObj);
+      //this.ai.removeInvalidDirections(playerBoardObj);
+      this.ai.addValidDirections(playerBoardObj);
       this.ai.attack(playerBoardObj);
     } else {
       const x = this.randomIntFromInterval(0, 9);
