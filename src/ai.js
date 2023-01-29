@@ -17,6 +17,42 @@ const ai = {
   addValidDirections: function (playerBoardObj) {
     this.chaseMode.validMoves = [];
     const posibleDirections = ["left", "right", "top", "bottom"];
+
+    // //remove direcctions that will be outside the board
+    switch (this.chaseMode.chaseSubject.x) {
+      case 0:
+        {
+          const index = posibleDirections.indexOf("left");
+
+          posibleDirections.splice(index, 1);
+        }
+        break;
+      case 9:
+        {
+          const index = posibleDirections.indexOf("right");
+
+          posibleDirections.splice(index, 1);
+        }
+        break;
+    }
+    switch (this.chaseMode.chaseSubject.y) {
+      case 0:
+        {
+          const index = posibleDirections.indexOf("top");
+
+          posibleDirections.splice(index, 1);
+        }
+        break;
+      case 9:
+        {
+          const index = posibleDirections.indexOf("bottom");
+
+          posibleDirections.splice(index, 1);
+        }
+        break;
+    }
+
+    //remove the directions that not follow rules
     posibleDirections.forEach((direction) => {
       if (
         playerBoardObj.attackResultOnly(
@@ -30,7 +66,6 @@ const ai = {
     alert(`valid directions are ${this.chaseMode.validMoves}`);
   },
   removeInvalidDirections: function (playerBoardObj) {
-    this.chaseMode.invalidDirections = [];
     //remove direcctions that will be outside the board
     switch (this.chaseMode.chaseSubject.x) {
       case 0:
