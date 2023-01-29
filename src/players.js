@@ -4,10 +4,44 @@ let computer = {
   ai,
 
   attack: function (playerBoardObj) {
-    if (this.ai.chaseMode.state === true) {
-      //alert("ai is working");
+    if (this.ai.chaseMode.reverseMode) {
+      let oposite = undefined;
+      switch (this.ai.chaseMode.firstDirection) {
+        case "left":
+          {
+            oposite = "right";
+          }
+          break;
+        case "right":
+          {
+            oposite = "left";
+          }
+          break;
+        case "top":
+          {
+            oposite = "bottom";
+          }
+          break;
+        case "bottom":
+          {
+            oposite = "top";
+          }
+          break;
+      }
+      if (this.ai.chaseMode.firstValidMoves.includes(oposite)) {
+      }
+      {
+        this.ai.chaseMode.chaseSubject = this.ai.chaseMode.firstChaseSubject;
+        this.ai.chaseMode.state = true;
+        this.ai.chaseMode.followDirection = oposite;
+        this.ai.chaseMode.isChasing = true;
+        //attack oposite direction of chaseSubject
+        //get coordinates of" oposite "of chaseSUbject
+      }
+      this.ai.chaseMode.reverseMode = false;
+    }
 
-      //this.ai.removeInvalidDirections(playerBoardObj);
+    if (this.ai.chaseMode.state === true) {
       this.ai.addValidDirections(playerBoardObj);
       this.ai.attack(playerBoardObj);
     } else {
@@ -19,7 +53,9 @@ let computer = {
           {
             this.ai.chaseMode.state = true;
             this.ai.chaseMode.chaseSubject.x = x;
+            this.ai.chaseMode.firstChaseSubject.x = x;
             this.ai.chaseMode.chaseSubject.y = y;
+            this.ai.chaseMode.firstChaseSubject.y = y;
           }
           break;
         case "missed":

@@ -2,15 +2,15 @@ import { computer } from "./players";
 
 const ai = {
   chaseMode: {
-    invalidDirections: [],
-    isReversed: false,
+    reverseMode: false,
     state: false,
     chaseSubject: { x: undefined, y: undefined }, //x,y
 
     validMoves: ["left", "right", "top", "bottom"],
     followDirection: undefined,
-    firstChaseSubject: {}, //for reversed
-    originalValidMoves: [], //for reversed
+    firstChaseSubject: { x: undefined, y: undefined }, //for reversed
+    firstValidMoves: [], //for reversed
+    firstDirection: undefined,
     isChasing: false,
   },
   //this will modify the array validMoves
@@ -121,96 +121,9 @@ const ai = {
         this.chaseMode.isChasing = false;
         return undefined;
       }
-
-      /* else {
-          //go oposite direction from the start\
-          // it should be saved, the valid moves from the original chase objective
-          //if it is not posible, end here
-          alert("going in opposite direction");
-
-          switch (this.chaseMode.followDirection) {
-            case "left":
-              {
-                if (this.chaseMode.originalValidMoves.includes("right")) {
-                  var direction = "right";
-                  this.chaseMode.isReversed = true;
-                } else {
-                  alert("chase mode finished");
-                  this.chaseMode.state = false;
-                  //reset valid moves
-                  this.chaseMode.validMoves = [
-                    "left",
-                    "right",
-                    "top",
-                    "bottom",
-                  ];
-                  return "chase mode ended";
-                }
-              }
-              break;
-            case "right":
-              {
-                if (this.chaseMode.originalValidMoves.includes("left")) {
-                  var direction = "left";
-                  this.chaseMode.isReversed = true;
-                } else {
-                  alert("chase mode finished");
-                  this.chaseMode.state = false;
-                  //reset valid moves
-                  this.chaseMode.validMoves = [
-                    "left",
-                    "right",
-                    "top",
-                    "bottom",
-                  ];
-                  return "chase mode ended";
-                }
-              }
-              break;
-            case "top":
-              {
-                if (this.chaseMode.originalValidMoves.includes("bottom")) {
-                  var direction = "bottom";
-                  this.chaseMode.isReversed = true;
-                } else {
-                  alert("chase mode finished");
-                  this.chaseMode.state = false;
-                  //reset valid moves
-                  this.chaseMode.validMoves = [
-                    "left",
-                    "right",
-                    "top",
-                    "bottom",
-                  ];
-                  return "chase mode ended";
-                }
-              }
-              break;
-            case "bottom":
-              {
-                if (this.chaseMode.originalValidMoves.includes("top")) {
-                  var direction = "top";
-                  this.chaseMode.isReversed = true;
-                } else {
-                  alert("chase mode finished");
-                  this.chaseMode.state = false;
-                  //reset valid moves
-                  this.chaseMode.validMoves = [
-                    "left",
-                    "right",
-                    "top",
-                    "bottom",
-                  ];
-                  return "chase mode ended";
-                }
-              }
-              break;
-          }
-          this.chaseMode.chaseSubject = this.chaseMode.firstChaseSubject;
-        } */
     } else if (this.chaseMode.isChasing === false) {
       if (this.chaseMode.validMoves.length >= 1) {
-        this.chaseMode.originalValidMoves = this.chaseMode.validMoves; //this is for reverse mode later
+        this.chaseMode.firstValidMoves = this.chaseMode.validMoves; //this is for reverse mode later
         const directionIndex = computer.randomIntFromInterval(
           0,
           this.chaseMode.validMoves.length - 1
@@ -229,9 +142,13 @@ const ai = {
   //this will return a coordinate
   // {x,y}
   coordinates: function (direction) {
+    console.log("coordinates method");
     if (direction === undefined) {
+      console.log("direction is undefiend");
       return undefined;
     }
+
+    console.log(direction);
     switch (direction) {
       case "left": {
         return {
@@ -265,6 +182,7 @@ const ai = {
   },
   //use the new coordinate and direction
   attack: function (playerBoardObj) {
+    console.log("attack method");
     //save direction
 
     const direction = this.direction();
@@ -283,9 +201,6 @@ const ai = {
           {
             //update chase subject
             this.chaseMode.chaseSubject = coordinates;
-
-            //reset valid moves
-            this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
           }
           break;
         case "missed":
@@ -300,8 +215,14 @@ const ai = {
             //no need to do anything, it marks miss
             this.chaseMode.state = false;
             this.chaseMode.isChasing = false;
+            this.chaseMode.firstDirection = this.chaseMode.followDirection; // for reversed
             this.chaseMode.followDirection = undefined;
-            this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
+
+            if (this.chaseMode.reverseMode) {
+              this.chaseMode.reverseMode = false;
+            } else {
+              this.chaseMode.reverseMode = true;
+            }
           }
           break;
       }
@@ -310,14 +231,14 @@ const ai = {
         case "hit":
           {
             //save coordinates of this first hit
-            this.chaseMode.firstChaseSubject = this.chaseMode.chaseSubject; //for reversed
+            this.chaseMode.firstLinearHit = this.chaseMode.chaseSubject; //for reversed
 
             //change the chase subject
 
             this.chaseMode.chaseSubject = coordinates;
 
             //save valid moves of the first chase subject
-            this.chaseMode.originalValidMoves = this.chaseMode.validMoves; //for reverse !
+            this.chaseMode.firstValidMoves = this.chaseMode.validMoves; //for reverse !
             //reset valid moves
             this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
 
