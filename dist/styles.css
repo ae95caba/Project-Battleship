@@ -1,25 +1,58 @@
+body {
+  background-color: skyblue;
+  display: flex;
+  flex-direction: column;
+}
+
 .column,
 .cell {
-  border: 2px solid red;
-  width: 50px;
-  height: 50px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  width: 7vw;
+  height: 7vw;
 }
 
 .cell {
-  border: 2px black solid !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  position: relative;
 }
 
 #content {
-  display: flex;
-  gap: 2rem;
+  display: grid;
+  align-self: center;
 }
 
 #player-board-container,
 #computer-board-container {
   display: grid;
   grid-template-rows: min-content min-content min-content;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: min-content min-content min-content;
+  justify-self: center;
 }
+
+#figth-message {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -40%);
+  font-size: 3rem;
+  color: white;
+}
+
+.cell-container {
+  background-color: rgb(51, 53, 189);
+  color: black;
+  font-weight: bolder;
+  font-size: 1rem;
+  width: fit-content;
+  height: fit-content;
+}
+
 .row {
   display: flex;
 }
@@ -29,11 +62,20 @@
   grid-column: 2/3;
   display: flex;
   align-self: flex-end;
+
+  border-right: 1px solid black;
+}
+
+.middle {
+  display: flex;
+
+  justify-self: center;
 }
 
 .left {
   grid-column: 1/2;
   grid-row: 2/3;
+  border-bottom: 1px solid black;
 }
 
 .bottom {
@@ -41,11 +83,15 @@
   grid-row: 3/4;
   display: flex;
   align-self: flex-start;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .right {
   grid-column: 3/4;
   grid-row: 2/3;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .board {
@@ -53,7 +99,12 @@
   grid-row: 2/3;
 }
 
-#patrolBoat {
+/* .ship {
+  filter: invert(48%) sepia(0%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+} */
+
+#patrol-boat {
   width: 200%;
   height: 100%;
   position: relative;
@@ -85,4 +136,22 @@
   height: 100%;
   position: relative;
   pointer-events: none;
+}
+
+.shot-marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+}
+.hitted .shot-marker {
+  filter: invert(16%) sepia(70%) saturate(4930%) hue-rotate(360deg)
+    brightness(106%) contrast(133%);
+}
+
+.missed .shot-marker {
+  filter: invert(48%) sepia(0%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
 }

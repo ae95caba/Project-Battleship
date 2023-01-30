@@ -12,12 +12,13 @@ function axisButton() {
 function domPlaceShipImg(length, x, y, playerBoardObj) {
   const column = document.querySelector(`#playerBoard .row-${y} .column-${x}`);
   const img = document.createElement("img");
+  img.classList.add("ship");
   let ship;
   switch (length) {
     case 2:
       {
         ship = "patrolBoat";
-        img.id = ship;
+        img.id = "patrol-boat";
       }
       break;
     case 3:
@@ -49,9 +50,21 @@ function domPlaceShipImg(length, x, y, playerBoardObj) {
   column.appendChild(img);
 }
 
+function fightMessage() {
+  const content = document.getElementById("content");
+  const div = document.createElement("div");
+  div.id = "figth-message";
+  div.innerText = " Que empieze la batalla...";
+  content.appendChild(div);
+  setTimeout(() => {
+    div.remove();
+  }, 2000);
+}
+
 function boardCoordinates(position) {
   let cellContainer = document.createElement("div");
-  cellContainer.id = "cell-container";
+  cellContainer.classList.add("cell-container");
+
   cellContainer.classList.add(position);
   for (let i = 0; i < 10; i++) {
     const cell = document.createElement("div");
@@ -99,11 +112,19 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
 
       if (boardObj.board[r][c] !== undefined) {
         if (boardObj.board[r][c].destroyed === true) {
-          column.style.backgroundColor = "red";
+          // column.style.backgroundColor = "red";
+          if (column.classList.contains("hitted") === false) {
+            column.append(shotMarker());
+            column.classList.add("hitted");
+          }
         } else if (boardObj.board[r][c].destroyed === false && isPlayerBoard) {
           //column.style.backgroundColor = "green";
         } else if (boardObj.board[r][c] === "missed") {
-          column.style.backgroundColor = "grey";
+          //column.style.backgroundColor = "grey";
+          if (column.classList.contains("missed") === false) {
+            column.append(shotMarker());
+            column.classList.add("missed");
+          }
         }
       }
     }
@@ -111,6 +132,7 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
 }
 
 export {
+  fightMessage,
   domRenderBoard,
   domPopulateBoard,
   axisButton,

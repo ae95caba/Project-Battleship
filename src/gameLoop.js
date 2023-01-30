@@ -2,6 +2,7 @@ import {
   domRenderBoard,
   domPopulateBoard,
   boardCoordinates,
+  fightMessage,
 } from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
 import { computer, player } from "./players";
@@ -18,19 +19,22 @@ async function gameLoop() {
   playerBoardContainer.appendChild(boardCoordinates("left"));
   playerBoardContainer.appendChild(boardCoordinates("top"));
   playerBoardContainer.appendChild(domRenderBoard("playerBoard")); // make empty board
-  playerBoardContainer.appendChild(boardCoordinates("bottom"));
+  //playerBoardContainer.appendChild(boardCoordinates("bottom"));
   playerBoardContainer.appendChild(boardCoordinates("right"));
   //////////////////////////////////////
+
   const computerBoardContainer = document.getElementById(
     "computer-board-container"
   );
   computerBoardContainer.appendChild(boardCoordinates("left"));
-  computerBoardContainer.appendChild(boardCoordinates("top"));
+  // computerBoardContainer.appendChild(boardCoordinates("top"));
   computerBoardContainer.appendChild(domRenderBoard("computerBoard")); // make empty board
   computerBoardContainer.appendChild(boardCoordinates("right"));
   computerBoardContainer.appendChild(boardCoordinates("bottom"));
 
   content.appendChild(playerBoardContainer);
+  content.appendChild(boardCoordinates("middle"));
+  /////////////////////////////////////////
   content.appendChild(computerBoardContainer);
   /////////////////
 
@@ -102,6 +106,8 @@ async function gameLoop() {
   // -3-1 You need methods to render the gameboards /done/ and to take user input for attacking/done/. For attacks, let the user click on a coordinate in the enemy Gameboard.
   //-4 The game loop should step through the game turn by turn using only methods from other objects. If at any point you are tempted to write a new function inside the game loop, step back and figure out which class or module that function should belong to.
 
+  //display message !!!
+  fightMessage();
   for (
     let turn = 1;
     //Create conditions so that the game ends once one players ships have all been sunk. This function is appropriate for the Game module.
