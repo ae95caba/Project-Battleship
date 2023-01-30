@@ -1,12 +1,20 @@
 function axisButton() {
-  const axisButton = document.getElementById("axis-selector");
+  const axisButton = document.createElement("button");
+  axisButton.type = "button";
+  axisButton.setAttribute("data-direction", "horizontal");
+  axisButton.id = "axis-button";
+  axisButton.innerText = "Direccion: horizontal";
+
   axisButton.addEventListener("click", () => {
     if (axisButton.dataset.direction === "horizontal") {
       axisButton.dataset.direction = "vertical";
+      axisButton.innerText = "Direccion: vertical";
     } else {
       axisButton.dataset.direction = "horizontal";
+      axisButton.innerText = "Direccion: horizontal";
     }
   });
+  return axisButton;
 }
 
 function domPlaceShipImg(length, x, y, playerBoardObj, isvertical = false) {
@@ -53,11 +61,11 @@ function domPlaceShipImg(length, x, y, playerBoardObj, isvertical = false) {
   column.appendChild(img);
 }
 
-function fightMessage() {
+function message(messageBody) {
   const content = document.getElementById("content");
   const div = document.createElement("div");
-  div.id = "figth-message";
-  div.innerText = " Que empieze la batalla...";
+  div.classList.add("message");
+  div.innerText = messageBody;
   content.appendChild(div);
   setTimeout(() => {
     div.remove();
@@ -132,7 +140,7 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
 }
 
 export {
-  fightMessage,
+  message,
   domRenderBoard,
   domPopulateBoard,
   axisButton,

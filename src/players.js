@@ -164,7 +164,7 @@ let player = {
             let y = e.target.parentElement.dataset.y;
             console.log(e.target);
 
-            const axisButton = document.getElementById("axis-selector");
+            const axisButton = document.getElementById("axis-button");
             if (axisButton.dataset.direction === "horizontal") {
               if (playerBoardObj.willFollowRules(length, x, y)) {
                 playerBoardObj.placeShip(length, x, y);

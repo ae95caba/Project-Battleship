@@ -2,7 +2,8 @@ import {
   domRenderBoard,
   domPopulateBoard,
   boardCoordinates,
-  fightMessage,
+  message,
+  axisButton,
 } from "./domInteraction";
 import gameboardFactory from "./gameboardFactory";
 import { computer, player } from "./players";
@@ -34,6 +35,9 @@ async function gameLoop() {
 
   content.appendChild(playerBoardContainer);
   content.appendChild(boardCoordinates("middle"));
+  const botton = axisButton();
+  content.appendChild(botton);
+
   /////////////////////////////////////////
   content.appendChild(computerBoardContainer);
   /////////////////
@@ -70,31 +74,33 @@ async function gameLoop() {
   /////////////////////////
   computer.placeShip(computerBoardObj, 2);
   //console.log(computerBoardObj.fleet);
-  console.log("place your 2 ship");
+  const instructions = document.getElementById("instructions");
+  instructions.innerText = "Coloca tu bote de patrulla";
+
   await player.placeShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
-  console.log("place your 3 ship");
+  instructions.innerText = "Coloca tu destructor";
   await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
-  console.log("place your 3 ship");
+  instructions.innerText = "Coloca tu submarino";
   await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 4);
   //console.log(computerBoardObj.fleet);
-  console.log("place your 4 ship");
+  instructions.innerText = "Coloca tu nave de batalla";
   await player.placeShip(4, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 5);
   //console.log(computerBoardObj.fleet);
-  console.log("place your 5 ship");
+  instructions.innerText = "Coloca tu carguero";
   await player.placeShip(5, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
@@ -107,7 +113,11 @@ async function gameLoop() {
   //-4 The game loop should step through the game turn by turn using only methods from other objects. If at any point you are tempted to write a new function inside the game loop, step back and figure out which class or module that function should belong to.
 
   //display message !!!
-  fightMessage();
+  instructions.style.display = "none";
+
+  computerBoardContainer.style.display = "grid";
+  botton.remove();
+  message("Empieza la batalla...");
   for (
     let turn = 1;
     //Create conditions so that the game ends once one players ships have all been sunk. This function is appropriate for the Game module.
@@ -119,8 +129,7 @@ async function gameLoop() {
 
     await player.attack(computerBoardObj);
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
-
-    console.log("computerAttackNExt");
+    message("Ataque enemigo aproximandoce");
 
     computer.attack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");

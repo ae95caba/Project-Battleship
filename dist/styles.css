@@ -2,14 +2,37 @@ body {
   background-color: skyblue;
   display: flex;
   flex-direction: column;
+
+  height: 100vh;
+  justify-content: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#axis-button {
+  border: 1px solid black;
+  height: 2rem;
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  box-shadow: 0px 9px 0px;
+}
+
+#axis-button:active {
+  transform: translateY(4px);
+  box-shadow: 0px 5px 0px;
 }
 
 .column,
 .cell {
   border-top: 1px solid black;
   border-left: 1px solid black;
-  width: 7vw;
-  height: 7vw;
+  width: 7.4vw;
+  height: 7.4vw;
 }
 
 .cell {
@@ -27,6 +50,11 @@ body {
   align-self: center;
 }
 
+#instructions {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
 #player-board-container,
 #computer-board-container {
   display: grid;
@@ -34,8 +62,11 @@ body {
   grid-template-columns: min-content min-content min-content;
   justify-self: center;
 }
+#computer-board-container {
+  display: none;
+}
 
-#figth-message {
+.message {
   position: absolute;
   left: 50%;
   top: 40%;
@@ -45,9 +76,9 @@ body {
 }
 
 .ship.vertical {
+  /* 4vh change it if change cells dimentions */
   transform: rotate(90deg) translateY(-4vh) !important;
   transform-origin: top left;
-  border: 1px solid red;
 }
 
 .cell-container {
