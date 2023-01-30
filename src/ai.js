@@ -2,7 +2,7 @@ import { computer } from "./players";
 
 const ai = {
   chaseMode: {
-    wasReverseActivated: undefined,
+    wasReverseActivated: false,
     reverseMode: false,
     state: false,
     chaseSubject: { x: undefined, y: undefined }, //x,y
@@ -75,14 +75,87 @@ const ai = {
   //if posible
   //if not, return undefined,a random direction will trigger later in the code}
   //else if there was only 1 hit {
-  // pick a random direction of the valid directions array, if the array is empty, go to a random direction of the board
+  // pick a random direction of the valid directions array, if the array is empty, go to a random direction of the board(a random direction will trigger later in the code)
 
   direction: function () {
+    if (this.chaseMode.isChasing) {
+      if (!this.chaseMode.wasReverseActivated) {
+        if (
+          !this.chaseMode.validMoves.includes(this.chaseMode.followDirection)
+        ) {
+          //till here the logi is great!
+
+          alert("a random attack will occur ! But it shouldnt !");
+          console.log("a random attack will occur ! But it shouldnt !");
+          alert(this.chaseMode.wasReverseActivated);
+          console.log(this.chaseMode.wasReverseActivated);
+          //try reverse
+
+          let oposite = undefined;
+          switch (this.chaseMode.followDirection) {
+            case "left":
+              {
+                oposite = "right";
+              }
+              break;
+            case "right":
+              {
+                oposite = "left";
+              }
+              break;
+            case "top":
+              {
+                oposite = "bottom";
+              }
+              break;
+            case "bottom":
+              {
+                oposite = "top";
+              }
+              break;
+          }
+          if (this.chaseMode.firstValidMoves.includes(oposite)) {
+            //use reverse
+            this.chaseMode.wasReverseActivated = true;
+            this.chaseMode.chaseSubject = this.chaseMode.firstChaseSubject;
+            this.chaseMode.followDirection = oposite;
+            return oposite;
+          } else {
+            //a random direction will trigger later in the code
+            this.chaseMode.state = false;
+            this.chaseMode.isChasing = false;
+            //this.chaseMode.wasReverseActivated = false
+            return undefined;
+          }
+        }
+      }
+    }
+
+    if (this.chaseMode.isChasing) {
+      if (this.chaseMode.wasReverseActivated) {
+        if (
+          !this.chaseMode.validMoves.includes(this.chaseMode.followDirection)
+        ) {
+          this.chaseMode.wasReverseActivated = false;
+          alert("this should trigger a random direction but it doesnt !");
+          console.log("this should trigger a random direction but it doesnt !");
+          alert(this.chaseMode.wasReverseActivated);
+          console.log(this.chaseMode.wasReverseActivated);
+          //a random direction will trigger later in the code
+          this.chaseMode.state = false;
+          this.chaseMode.isChasing = false;
+          //this.chaseMode.wasReverseActivated = false
+
+          return undefined;
+        }
+      }
+    }
+
     if (this.chaseMode.isChasing) {
       if (this.chaseMode.validMoves.includes(this.chaseMode.followDirection)) {
         return this.chaseMode.followDirection;
       } else {
-        //alert("random direction");
+        //a random direction will trigger later in the code
         this.chaseMode.state = false;
         this.chaseMode.isChasing = false;
         return undefined;
@@ -167,7 +240,10 @@ const ai = {
     //save coordinates
     const coordinates = this.coordinates(direction);
 
-    //attack in a random direciton
+    //if the directions method dindt return any direction, hence coordinates will return undefined
+    //if no in reverse mode{attack in a random direction}
+    //else{}
+
     if (coordinates === undefined) {
       computer.attack(playerBoardObj);
       return undefined;
