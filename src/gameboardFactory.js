@@ -138,6 +138,7 @@ function gameboardFactory() {
   const willFollowRules = function (length, x, y) {
     const willOverlap = function (length, x, y) {
       for (let i = 0; i < length; i++) {
+        console.log(y);
         if (typeof board[y][+x + i] === "object") {
           return true;
         }

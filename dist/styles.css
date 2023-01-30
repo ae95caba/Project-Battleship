@@ -52,3 +52,32 @@
   grid-column: 2/3;
   grid-row: 2/3;
 }
+
+#patrolBoat {
+  width: 200%;
+  height: 100%;
+  position: relative;
+}
+
+#submarine {
+  width: 300%;
+  height: 100%;
+  position: relative;
+}
+#destroyer {
+  width: 300%;
+  height: 100%;
+  position: relative;
+}
+
+#battleship {
+  width: 400%;
+  height: 100%;
+  position: relative;
+}
+
+#carrier {
+  width: 500%;
+  height: 100%;
+  position: relative;
+}

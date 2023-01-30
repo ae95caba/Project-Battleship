@@ -1,4 +1,5 @@
 import { ai } from "./ai";
+import { domPlaceShipImg } from "./domInteraction";
 
 let computer = {
   ai,
@@ -161,12 +162,14 @@ let player = {
             let x = e.target.dataset.x;
 
             let y = e.target.parentElement.dataset.y;
+            console.log(e.target);
 
             const axisButton = document.getElementById("axis-selector");
             if (axisButton.dataset.direction === "horizontal") {
               if (playerBoardObj.willFollowRules(length, x, y)) {
                 playerBoardObj.placeShip(length, x, y);
-
+                //dom function to display and image of the ship
+                domPlaceShipImg(length, x, y, playerBoardObj);
                 resolve();
               } else {
                 asd(resolve);

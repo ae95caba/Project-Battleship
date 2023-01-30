@@ -8,6 +8,47 @@ function axisButton() {
     }
   });
 }
+
+function domPlaceShipImg(length, x, y, playerBoardObj) {
+  const column = document.querySelector(`#playerBoard .row-${y} .column-${x}`);
+  const img = document.createElement("img");
+  let ship;
+  switch (length) {
+    case 2:
+      {
+        ship = "patrolBoat";
+        img.id = ship;
+      }
+      break;
+    case 3:
+      {
+        if (!playerBoardObj.fleet.submarine) {
+          ship = "destroyer";
+          img.id = ship;
+        } else {
+          ship = "submarine";
+          img.id = ship;
+        }
+      }
+      break;
+    case 4:
+      {
+        ship = "battleship";
+        img.id = ship;
+      }
+      break;
+    case 5:
+      {
+        ship = "carrier";
+        img.id = ship;
+      }
+      break;
+  }
+  img.src = `./${ship}.svg`;
+
+  column.appendChild(img);
+}
+
 function boardCoordinates(position) {
   let cellContainer = document.createElement("div");
   cellContainer.id = "cell-container";
@@ -42,6 +83,12 @@ function domRenderBoard(id) {
   }
   return board;
 }
+const shotMarker = () => {
+  const shotMarker = document.createElement("img");
+  shotMarker.src = "./shot-marker.svg";
+  shotMarker.classList.add("shot-marker");
+  return shotMarker;
+};
 
 function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   for (let r = 0; r < 10; r++) {
@@ -54,7 +101,7 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
         if (boardObj.board[r][c].destroyed === true) {
           column.style.backgroundColor = "red";
         } else if (boardObj.board[r][c].destroyed === false && isPlayerBoard) {
-          column.style.backgroundColor = "green";
+          //column.style.backgroundColor = "green";
         } else if (boardObj.board[r][c] === "missed") {
           column.style.backgroundColor = "grey";
         }
@@ -63,4 +110,10 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   }
 }
 
-export { domRenderBoard, domPopulateBoard, axisButton, boardCoordinates };
+export {
+  domRenderBoard,
+  domPopulateBoard,
+  axisButton,
+  boardCoordinates,
+  domPlaceShipImg,
+};
