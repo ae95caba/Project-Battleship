@@ -21,10 +21,15 @@ function gameboardFactory() {
         break;
       case 3:
         {
-          fleet.destroyer = shipFactory(length);
-          currentShip = "destroyer";
+          if (!fleet.destroyer) {
+            fleet.destroyer = shipFactory(length);
+            currentShip = "destroyer";
+          } else {
+            fleet.submarine = shipFactory(length);
+            currentShip = "submarine";
+          }
         }
-        //fleet.submarine = shipFactory(length);
+
         break;
 
       case 2:
@@ -66,8 +71,13 @@ function gameboardFactory() {
         break;
       case 3:
         {
-          fleet.destroyer = shipFactory(length);
-          currentShip = "destroyer";
+          if (!fleet.destroyer) {
+            fleet.destroyer = shipFactory(length);
+            currentShip = "destroyer";
+          } else {
+            fleet.submarine = shipFactory(length);
+            currentShip = "submarine";
+          }
         }
         //fleet.submarine = shipFactory(length);
         break;
@@ -178,7 +188,8 @@ function gameboardFactory() {
       this.fleet.carrier.isSunk() &&
       this.fleet.patrolBoat.isSunk() &&
       this.fleet.destroyer.isSunk() &&
-      this.fleet.battleship.isSunk()
+      this.fleet.battleship.isSunk() &&
+      this.fleet.submarine.isSunk()
     );
   };
 

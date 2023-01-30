@@ -85,9 +85,9 @@ const ai = {
         ) {
           //till here the logi is great!
 
-          alert("a random attack will occur ! But it shouldnt !");
+          //alert("a random attack will occur ! But it shouldnt !");
           console.log("a random attack will occur ! But it shouldnt !");
-          alert(this.chaseMode.wasReverseActivated);
+          //alert(this.chaseMode.wasReverseActivated);
           console.log(this.chaseMode.wasReverseActivated);
           //try reverse
 
@@ -137,9 +137,9 @@ const ai = {
           !this.chaseMode.validMoves.includes(this.chaseMode.followDirection)
         ) {
           this.chaseMode.wasReverseActivated = false;
-          alert("this should trigger a random direction but it doesnt !");
+          //alert("this should trigger a random direction but it doesnt !");
           console.log("this should trigger a random direction but it doesnt !");
-          alert(this.chaseMode.wasReverseActivated);
+          //alert(this.chaseMode.wasReverseActivated);
           console.log(this.chaseMode.wasReverseActivated);
           //a random direction will trigger later in the code
           this.chaseMode.state = false;

@@ -63,31 +63,4 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
   }
 }
 
-/* function attackWithClick(domBoard, computerBoardObj) {
-  domBoard.addEventListener("click", (e) => {
-    let x = e.target.dataset.x;
-    let y = e.target.parentElement.dataset.y;
-  });
-  if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
-    computerBoardObj.reciveAttack(x, y);
-  } else {
-    attackWithClick(domBoard, computerBoardObj);
-  }
-  //
-  if (computerBoardObj.reciveAttack(x, y) !== "repetido") {
-    computerBoardObj.reciveAttack(x, y);
-
-    domPopulateBoard(computerBoardObj, "#computerBoard", false);
-
-    setTimeout(() => {
-      computerttack();
-      domPopulateBoard(playerBoardObj, "#playerBoard");
-      letThemPlay();
-    }, 2000);
-  } else {
-    alert("repetido");
-    letThemPlay();
-  }
-} */
-
 export { domRenderBoard, domPopulateBoard, axisButton, boardCoordinates };

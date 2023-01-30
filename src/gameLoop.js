@@ -37,7 +37,7 @@ async function gameLoop() {
   const playerBoardObj = gameboardFactory();
   const computerBoardObj = gameboardFactory();
 
-  playerBoardObj.board[1][1] = "missed";
+  /* playerBoardObj.board[1][1] = "missed";
   playerBoardObj.board[1][2] = "missed";
   playerBoardObj.board[1][3] = "missed";
   playerBoardObj.board[1][4] = "missed";
@@ -62,12 +62,18 @@ async function gameLoop() {
   playerBoardObj.board[5][4] = "missed";
   playerBoardObj.board[5][5] = "missed";
   playerBoardObj.board[5][6] = "missed";
-  playerBoardObj.board[5][7] = "missed";
+  playerBoardObj.board[5][7] = "missed"; */
   /////////////////////////
   computer.placeShip(computerBoardObj, 2);
   //console.log(computerBoardObj.fleet);
   console.log("place your 2 ship");
   await player.placeShip(2, "playerBoard", playerBoardObj);
+  domPopulateBoard(playerBoardObj, "#playerBoard", true);
+
+  computer.placeShip(computerBoardObj, 3);
+  //console.log(computerBoardObj.fleet);
+  console.log("place your 3 ship");
+  await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
