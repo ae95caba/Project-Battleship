@@ -57,27 +57,32 @@
   width: 200%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
 
 #submarine {
   width: 300%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
 #destroyer {
   width: 300%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
 
 #battleship {
   width: 400%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
 
 #carrier {
   width: 500%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
