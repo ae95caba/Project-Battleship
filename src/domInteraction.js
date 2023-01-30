@@ -9,11 +9,14 @@ function axisButton() {
   });
 }
 
-function domPlaceShipImg(length, x, y, playerBoardObj) {
+function domPlaceShipImg(length, x, y, playerBoardObj, isvertical = false) {
   const column = document.querySelector(`#playerBoard .row-${y} .column-${x}`);
   const img = document.createElement("img");
   img.classList.add("ship");
   let ship;
+  if (isvertical) {
+    img.classList.add("vertical");
+  }
   switch (length) {
     case 2:
       {
@@ -112,15 +115,12 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
 
       if (boardObj.board[r][c] !== undefined) {
         if (boardObj.board[r][c].destroyed === true) {
-          // column.style.backgroundColor = "red";
           if (column.classList.contains("hitted") === false) {
             column.append(shotMarker());
             column.classList.add("hitted");
           }
         } else if (boardObj.board[r][c].destroyed === false && isPlayerBoard) {
-          //column.style.backgroundColor = "green";
         } else if (boardObj.board[r][c] === "missed") {
-          //column.style.backgroundColor = "grey";
           if (column.classList.contains("missed") === false) {
             column.append(shotMarker());
             column.classList.add("missed");

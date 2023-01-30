@@ -44,6 +44,12 @@ body {
   color: white;
 }
 
+.ship.vertical {
+  transform: rotate(90deg) translateY(-4vh) !important;
+  transform-origin: top left;
+  border: 1px solid red;
+}
+
 .cell-container {
   background-color: rgb(51, 53, 189);
   color: black;
@@ -99,14 +105,12 @@ body {
   grid-row: 2/3;
 }
 
-/* .ship {
-  filter: invert(48%) sepia(0%) saturate(2476%) hue-rotate(86deg)
-    brightness(118%) contrast(119%);
-} */
-
 #patrol-boat {
   width: 200%;
   height: 100%;
+}
+
+.ship {
   position: relative;
   pointer-events: none;
 }
@@ -114,28 +118,20 @@ body {
 #submarine {
   width: 300%;
   height: 100%;
-  position: relative;
-  pointer-events: none;
 }
 #destroyer {
   width: 300%;
   height: 100%;
-  position: relative;
-  pointer-events: none;
 }
 
 #battleship {
   width: 400%;
   height: 100%;
-  position: relative;
-  pointer-events: none;
 }
 
 #carrier {
   width: 500%;
   height: 100%;
-  position: relative;
-  pointer-events: none;
 }
 
 .shot-marker {

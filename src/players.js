@@ -177,7 +177,7 @@ let player = {
             } else if (axisButton.dataset.direction === "vertical") {
               if (playerBoardObj.willFollowRulesVertically(length, x, y)) {
                 playerBoardObj.placeShipVertically(length, x, y);
-
+                domPlaceShipImg(length, x, y, playerBoardObj, true);
                 resolve();
               } else {
                 asd(resolve);
