@@ -183,15 +183,19 @@ const ai = {
           break;
         case "missed":
           {
-            this.chaseMode.state = false;
-            this.chaseMode.isChasing = false;
-            this.chaseMode.firstDirection = this.chaseMode.followDirection; // for reversed
-            this.chaseMode.followDirection = undefined;
+            //if reverse mode was not in activated{
+            //start reverseMode}
+            ///if it was{
+            //end chasinMode and its modes}
 
-            if (this.chaseMode.wasReverseActivated) {
-              this.chaseMode.wasReverseActivated = false;
-            } else {
+            if (this.chaseMode.wasReverseActivated !== true) {
               this.chaseMode.reverseMode = true;
+            } else {
+              this.chaseMode.state = false;
+              this.chaseMode.isChasing = false;
+
+              this.chaseMode.followDirection = undefined;
+              this.chaseMode.wasReverseActivated = false;
             }
           }
           break;
@@ -200,9 +204,6 @@ const ai = {
       switch (playerBoardObj.reciveAttack(coordinates.x, coordinates.y)) {
         case "hit":
           {
-            //save coordinates of this first hit
-            this.chaseMode.firstLinearHit = this.chaseMode.chaseSubject; //for reversed
-
             //update the chase subject
             this.chaseMode.chaseSubject = coordinates;
 
@@ -212,6 +213,8 @@ const ai = {
             //start a chasing direction
             this.chaseMode.followDirection = direction;
             this.chaseMode.isChasing = true;
+
+            this.chaseMode.firstDirection = this.chaseMode.followDirection; // for reversed
           }
           break;
         case "missed":

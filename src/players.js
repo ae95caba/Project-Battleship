@@ -4,6 +4,12 @@ let computer = {
   ai,
 
   attack: function (playerBoardObj) {
+    //if reverseMode is true
+    //check to see if the oposite direction of the followDirection/firstDirection is in the firstValidMoves array{
+    //if it is chage the chaseSubject and the followDirection}
+    //else dont do anithing (the next attack will be random)
+    //after any of the two, disable the reverseMode because it is only a modifier and it should not run on every attack of the reversed chase
+    // and enable the wasReverseActivated, becasue the reverseMode should no be used a second time on the same subject
     if (this.ai.chaseMode.reverseMode) {
       let oposite = undefined;
       switch (this.ai.chaseMode.firstDirection) {
