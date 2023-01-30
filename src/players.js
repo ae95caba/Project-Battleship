@@ -29,8 +29,6 @@ let computer = {
           break;
       }
       if (this.ai.chaseMode.firstValidMoves.includes(oposite)) {
-      }
-      {
         this.ai.chaseMode.chaseSubject = this.ai.chaseMode.firstChaseSubject;
         this.ai.chaseMode.state = true;
         this.ai.chaseMode.followDirection = oposite;
@@ -39,6 +37,7 @@ let computer = {
         //get coordinates of" oposite "of chaseSUbject
       }
       this.ai.chaseMode.reverseMode = false;
+      this.ai.chaseMode.wasReverseActivated = true;
     }
 
     if (this.ai.chaseMode.state === true) {
@@ -47,7 +46,7 @@ let computer = {
     } else {
       const x = this.randomIntFromInterval(0, 9);
       const y = this.randomIntFromInterval(0, 9);
-
+      //alert("random direction by computer.attack");
       switch (playerBoardObj.reciveAttack(x, y)) {
         case "hit":
           {

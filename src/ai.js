@@ -2,6 +2,7 @@ import { computer } from "./players";
 
 const ai = {
   chaseMode: {
+    wasReverseActivated: undefined,
     reverseMode: false,
     state: false,
     chaseSubject: { x: undefined, y: undefined }, //x,y
@@ -53,6 +54,7 @@ const ai = {
     }
 
     //remove the directions that not follow rules
+    //only in chaseSubject
     posibleDirections.forEach((direction) => {
       if (
         playerBoardObj.attackResultOnly(
@@ -63,60 +65,24 @@ const ai = {
         this.chaseMode.validMoves.push(direction);
       }
     });
-    alert(`valid directions are ${this.chaseMode.validMoves}`);
   },
-  removeInvalidDirections: function (playerBoardObj) {
-    //remove direcctions that will be outside the board
-    switch (this.chaseMode.chaseSubject.x) {
-      case 0:
-        {
-          const index = this.chaseMode.validMoves.indexOf("left");
 
-          this.chaseMode.validMoves.splice(index, 1);
-        }
-        break;
-      case 9:
-        {
-          const index = this.chaseMode.validMoves.indexOf("right");
-
-          this.chaseMode.validMoves.splice(index, 1);
-        }
-        break;
-    }
-    switch (this.chaseMode.chaseSubject.y) {
-      case 0:
-        {
-          const index = this.chaseMode.validMoves.indexOf("top");
-
-          this.chaseMode.validMoves.splice(index, 1);
-        }
-        break;
-      case 9:
-        {
-          const index = this.chaseMode.validMoves.indexOf("bottom");
-
-          this.chaseMode.validMoves.splice(index, 1);
-        }
-        break;
-    }
-    //remove the directions that will not follow rules !!!
-    //only in chaseSubject
-  },
   //pick a direction
   //this will return a direction
+
   // if it has 2 consecutive hits{
   // keep in the succesfull direction
   //if posible
-  //if not, return the first viable direction}
-  //else{return a random direction}
+  //if not, return undefined,a random direction will trigger later in the code}
+  //else if there was only 1 hit {
+  // pick a random direction of the valid directions array, if the array is empty, go to a random direction of the board
+
   direction: function () {
     if (this.chaseMode.isChasing) {
-      console.log(`followDIrection is :${this.chaseMode.followDirection}`);
       if (this.chaseMode.validMoves.includes(this.chaseMode.followDirection)) {
-        console.log(`the follow direction is valid`);
         return this.chaseMode.followDirection;
       } else {
-        console.log("random direction");
+        //alert("random direction");
         this.chaseMode.state = false;
         this.chaseMode.isChasing = false;
         return undefined;
@@ -130,7 +96,6 @@ const ai = {
         );
         const direction = this.chaseMode.validMoves[directionIndex];
 
-        alert(`randomly selected direction : ${direction}`);
         return direction;
       } else if (this.chaseMode.validMoves.length === 0) {
         this.chaseMode.state = false;
@@ -142,13 +107,10 @@ const ai = {
   //this will return a coordinate
   // {x,y}
   coordinates: function (direction) {
-    console.log("coordinates method");
     if (direction === undefined) {
-      console.log("direction is undefiend");
       return undefined;
     }
 
-    console.log(direction);
     switch (direction) {
       case "left": {
         return {
@@ -180,16 +142,32 @@ const ai = {
       }
     }
   },
-  //use the new coordinate and direction
-  attack: function (playerBoardObj) {
-    console.log("attack method");
-    //save direction
 
+  //use the new coordinate and direction
+
+  //if no direction was selected
+  //attack a random position on the board
+
+  //if a direction was selected
+  //there are 2 branches
+
+  //first if isChasin
+  //and hits then update the chase subject
+
+  // if misses and it is  in reverseMode
+  // disable chaseeMode and its modes
+
+  //if it was not in reverse mode
+  // enable reverseMode
+  //
+  attack: function (playerBoardObj) {
+    //save direction
     const direction = this.direction();
-    //attack;
+
     //save coordinates
     const coordinates = this.coordinates(direction);
 
+    //attack in a random direciton
     if (coordinates === undefined) {
       computer.attack(playerBoardObj);
       return undefined;
@@ -205,21 +183,13 @@ const ai = {
           break;
         case "missed":
           {
-            /*   //if runing form the oposite direction, the chase mode should stop
-              if (this.chaseMode.isReversed) {
-                this.chaseMode.state = false;
-              } */
-            //get random number choosed from array moves and deleted from
-            //the array so only the left posible move remains
-            //its not necesary beacause the function detects missed shoots
-            //no need to do anything, it marks miss
             this.chaseMode.state = false;
             this.chaseMode.isChasing = false;
             this.chaseMode.firstDirection = this.chaseMode.followDirection; // for reversed
             this.chaseMode.followDirection = undefined;
 
-            if (this.chaseMode.reverseMode) {
-              this.chaseMode.reverseMode = false;
+            if (this.chaseMode.wasReverseActivated) {
+              this.chaseMode.wasReverseActivated = false;
             } else {
               this.chaseMode.reverseMode = true;
             }
@@ -233,31 +203,21 @@ const ai = {
             //save coordinates of this first hit
             this.chaseMode.firstLinearHit = this.chaseMode.chaseSubject; //for reversed
 
-            //change the chase subject
-
+            //update the chase subject
             this.chaseMode.chaseSubject = coordinates;
 
             //save valid moves of the first chase subject
             this.chaseMode.firstValidMoves = this.chaseMode.validMoves; //for reverse !
-            //reset valid moves
-            this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
 
-            //start a chasin direction ....and axis
+            //start a chasing direction
             this.chaseMode.followDirection = direction;
             this.chaseMode.isChasing = true;
           }
           break;
         case "missed":
           {
-            //if runing form the oposite direction, the chase mode should stop
-            /* if (this.chaseMode.isReversed) {
-                this.chaseMode.state = false;
-              } */
-            //get random number choosed from array moves and deleted from
-            //the array so only the left posible move remains
-            //its not necesary beacause the function detects missed shoots
             //it is not necesary to do anything here because the ai will keep trying until it gets a hit
-            this.chaseMode.validMoves = ["left", "right", "top", "bottom"];
+            // and every miss is removed from the valid directions array
           }
           break;
       }
