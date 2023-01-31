@@ -75,32 +75,32 @@ async function gameLoop() {
   computer.placeShip(computerBoardObj, 2);
   //console.log(computerBoardObj.fleet);
   const instructions = document.getElementById("instructions");
-  instructions.innerText = "Coloca tu bote de patrulla";
+  instructions.innerText = "Posiciona tu bote";
 
   await player.placeShip(2, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
-  instructions.innerText = "Coloca tu destructor";
+  instructions.innerText = "Posiciona tu destructor";
   await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 3);
   //console.log(computerBoardObj.fleet);
-  instructions.innerText = "Coloca tu submarino";
+  instructions.innerText = "Posiciona tu submarino";
   await player.placeShip(3, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 4);
   //console.log(computerBoardObj.fleet);
-  instructions.innerText = "Coloca tu nave de batalla";
+  instructions.innerText = "Posiciona tu acorazado";
   await player.placeShip(4, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
   computer.placeShip(computerBoardObj, 5);
   //console.log(computerBoardObj.fleet);
-  instructions.innerText = "Coloca tu carguero";
+  instructions.innerText = "Posiciona tu carguero";
   await player.placeShip(5, "playerBoard", playerBoardObj);
   domPopulateBoard(playerBoardObj, "#playerBoard", true);
 
@@ -113,6 +113,8 @@ async function gameLoop() {
   //-4 The game loop should step through the game turn by turn using only methods from other objects. If at any point you are tempted to write a new function inside the game loop, step back and figure out which class or module that function should belong to.
 
   //display message !!!
+  const logoContainer = document.getElementById("logo-container");
+  logoContainer.style.display = "none";
   instructions.style.display = "none";
 
   computerBoardContainer.style.display = "grid";

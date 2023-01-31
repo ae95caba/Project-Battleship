@@ -140,6 +140,8 @@ function domPopulateBoard(boardObj, DomBoardSelector, isPlayerBoard = true) {
           if (column.classList.contains("hitted") === false) {
             column.append(shotMarker());
             column.classList.add("hitted");
+            var audio = new Audio("./shoot-hit.mp3");
+            audio.play();
           }
         } else if (boardObj.board[r][c].destroyed === false && isPlayerBoard) {
         } else if (boardObj.board[r][c] === "missed") {
