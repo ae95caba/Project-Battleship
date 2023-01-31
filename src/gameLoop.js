@@ -117,7 +117,8 @@ async function gameLoop() {
 
   computerBoardContainer.style.display = "grid";
   botton.remove();
-  message("Empieza la batalla...");
+  await message("Empieza la batalla...");
+
   for (
     let turn = 1;
     //Create conditions so that the game ends once one players ships have all been sunk. This function is appropriate for the Game module.
@@ -125,14 +126,18 @@ async function gameLoop() {
     playerBoardObj.isGameOver() === false;
     turn++
   ) {
-    console.log("awaiting player attack");
-
+    var audio = new Audio("./shoot.mp3");
+    await message("Esperando ordenes capitan!");
     await player.attack(computerBoardObj);
+    audio.play();
     domPopulateBoard(computerBoardObj, "#computerBoard", false);
-    message("Ataque enemigo aproximandoce");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await message("Ataque enemigo aproximandoce");
 
+    audio.play();
     computer.attack(playerBoardObj);
     domPopulateBoard(playerBoardObj, "#playerBoard");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   alert("game over");

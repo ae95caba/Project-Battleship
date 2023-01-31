@@ -182,3 +182,35 @@ body {
   filter: invert(48%) sepia(0%) saturate(2476%) hue-rotate(86deg)
     brightness(118%) contrast(119%);
 }
+
+#player-board-container .shot-marker {
+  animation-duration: 0.5s;
+  animation-name: shoot;
+  animation-iteration-count: 1;
+}
+@keyframes shoot {
+  from {
+    width: 1px;
+    opacity: 0.1s;
+    transform: translateY(400px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#computer-board-container .shot-marker {
+  animation-duration: 0.5s;
+  animation-name: shoot2;
+  animation-iteration-count: 1;
+}
+@keyframes shoot2 {
+  from {
+    width: 1px;
+    opacity: 0.1s;
+    transform: translateY(-400px);
+  }
+  to {
+    opacity: 1;
+  }
+}

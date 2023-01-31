@@ -61,7 +61,7 @@ function domPlaceShipImg(length, x, y, playerBoardObj, isvertical = false) {
   column.appendChild(img);
 }
 
-function message(messageBody) {
+/* function message(messageBody) {
   const content = document.getElementById("content");
   const div = document.createElement("div");
   div.classList.add("message");
@@ -69,7 +69,21 @@ function message(messageBody) {
   content.appendChild(div);
   setTimeout(() => {
     div.remove();
-  }, 2000);
+  }, 1000);
+}
+ */
+function message(messageBody) {
+  return new Promise((resolve) => {
+    const content = document.getElementById("content");
+    const div = document.createElement("div");
+    div.classList.add("message");
+    div.innerText = messageBody;
+    content.appendChild(div);
+    setTimeout(() => {
+      div.remove();
+      resolve();
+    }, 1500);
+  });
 }
 
 function boardCoordinates(position) {
